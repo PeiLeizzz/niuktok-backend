@@ -30,4 +30,10 @@ public class TestController {
     public String redis() {
         return redisService.get("test");
     }
+
+    @GetMapping("/redission")
+    @ApiOperation("测试 redission")
+    public String redission() {
+        return redisService.getWithLock("test");
+    }
 }
