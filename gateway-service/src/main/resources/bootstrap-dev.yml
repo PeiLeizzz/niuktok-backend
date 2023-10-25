@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      # Nacos 认证信息
+      username: nacos
+      password: nacos
+      # Nacos 服务发现与注册配置，server-addr 指定 Nacos 服务器主机和端口
+      server-addr: 192.168.10.121:8848
+      discovery:
+        namespace: niuktok-${env}
+        group: ${env}
+      config:
+        namespace: niuktok-${env}
+        group: ${env}
+        file-extension: yaml
+        extension-configs:
+          - data-id: common-${env}.yaml
+            group: ${env}
+            refresh: true
+          - data-id: niuktok-datasource-${env}.yaml
+            group: ${env}
+            refresh: true
+env: dev

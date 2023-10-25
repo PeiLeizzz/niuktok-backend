@@ -1,0 +1,43 @@
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="niuktok" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
+            <property name="caseSensitive" value="true"/>
+            <property name="lombok" value="Getter,Setter,ToString"/>
+        </plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.10.121:3310/niuktok?serverTimezone=Asia/Shanghai&amp;useSSL=false&amp;useUnicode=true&amp;amp&amp;characterEncoding=utf-8"
+                        userId="qiniu"
+                        password="qiniu1024">
+            <!--If you are using version 8.x of Connector/J you may notice that the generator attempts to-->
+            <!--generate code for tables in the MySql information schemas-->
+            <!--(sys, information_schema, performance_schema, etc.)-->
+            <!--This is probably not what you want! To disable this behavior,-->
+            <!--add the property "nullCatalogMeansCurrent=true" to your JDBC URL.-->
+            <property name="nullCatalogMeansCurrent" value="true" />
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.niuktok.backend.common.entity"
+                            targetProject="src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources"/>
+
+        <javaClientGenerator targetPackage="com.niuktok.backend.common.mapper"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName = "user" >
+            <generatedKey column="id" sqlStatement="JDBC" />
+        </table>
+    </context>
+</generatorConfiguration>
