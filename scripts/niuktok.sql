@@ -45,7 +45,7 @@ CREATE TABLE `message` (
   `to_user_id` int unsigned NOT NULL,
   `content` varchar(1024) COLLATE utf8mb4_general_ci NOT NULL,
   `type` tinyint unsigned NOT NULL,
-  `is_readed` tinyint unsigned NOT NULL DEFAULT '0',
+  `is_read` tinyint unsigned NOT NULL DEFAULT '0',
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_time` timestamp NULL DEFAULT NULL,
