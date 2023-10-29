@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource   
+    driverClassName: com.mysql.cj.jdbc.Driver       
+    url: jdbc:mysql://10.214.199.218:3398/niuktok?useTimezone=true&serverTimezone=Asia/Shanghai&useSSL=false&useUnicode=true&amp&autoReconnect=true&characterEncoding=utf-8
+    username: qiniu
+    password: qiniu1024
+    dbcp2:
+      minIdle: 5                                      
+      initialSize: 5                                   
+      maxTotal: 5                                         
+      maxWaitMillis: 200
+    connectionInitSqls : ["set names utf8mb4;"]

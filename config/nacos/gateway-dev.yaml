@@ -1,0 +1,23 @@
+server:
+  port: 28001
+
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns:
+            - "*"
+            allowCredentials: true
+            allowedHeaders:
+            - "*"
+            allowedMethods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - OPTIONS
+      discovery:
+        locator:
+          enabled: true

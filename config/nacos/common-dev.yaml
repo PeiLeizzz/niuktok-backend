@@ -1,0 +1,11 @@
+mybatis:
+  mapperLocations: classpath*:mapper/*.xml
+  
+mapper:
+  not-empty: false
+  identity: MYSQL
+
+customize:
+  service:
+    redis:
+      service-name: redis-service
