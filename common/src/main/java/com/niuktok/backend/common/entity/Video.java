@@ -10,25 +10,34 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "video")
+public class Video implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
     private Integer id;
 
-    private String username;
+    @Column(name = "user_id")
+    private Integer userId;
 
-    private String avatar;
+    private String description;
 
-    private Byte sex;
+    @Column(name = "video_path")
+    private String videoPath;
 
-    @Column(name = "followed_num")
-    private Long followedNum;
+    @Column(name = "cover_path")
+    private String coverPath;
 
-    @Column(name = "follower_num")
-    private Long followerNum;
+    @Column(name = "play_num")
+    private Long playNum;
 
-    private Byte status;
+    @Column(name = "like_num")
+    private Long likeNum;
+
+    @Column(name = "favorite_num")
+    private Long favoriteNum;
+
+    @Column(name = "share_num")
+    private Long shareNum;
 
     @Column(name = "created_time")
     private Date createdTime;
@@ -38,6 +47,8 @@ public class User implements Serializable {
 
     @Column(name = "deleted_time")
     private Date deletedTime;
+
+    private String info;
 
     private static final long serialVersionUID = 1L;
 }

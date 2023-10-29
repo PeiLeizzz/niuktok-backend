@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niuktok.backend.common.mapper.VideoMapper">
+  <resultMap id="BaseResultMap" type="com.niuktok.backend.common.entity.Video">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="video_path" jdbcType="VARCHAR" property="videoPath" />
+    <result column="cover_path" jdbcType="VARCHAR" property="coverPath" />
+    <result column="play_num" jdbcType="BIGINT" property="playNum" />
+    <result column="like_num" jdbcType="BIGINT" property="likeNum" />
+    <result column="favorite_num" jdbcType="BIGINT" property="favoriteNum" />
+    <result column="share_num" jdbcType="BIGINT" property="shareNum" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="deleted_time" jdbcType="TIMESTAMP" property="deletedTime" />
+    <result column="info" jdbcType="LONGVARCHAR" property="info" />
+  </resultMap>
+</mapper>

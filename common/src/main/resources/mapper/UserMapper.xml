@@ -7,5 +7,13 @@
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="followed_num" jdbcType="BIGINT" property="followedNum" />
+    <result column="follower_num" jdbcType="BIGINT" property="followerNum" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="deleted_time" jdbcType="TIMESTAMP" property="deletedTime" />
   </resultMap>
 </mapper>

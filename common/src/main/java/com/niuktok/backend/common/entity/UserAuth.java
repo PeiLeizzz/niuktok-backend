@@ -10,25 +10,21 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "user_auth")
+public class UserAuth implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
     private Integer id;
 
-    private String username;
+    @Column(name = "user_id")
+    private Integer userId;
 
-    private String avatar;
+    @Column(name = "identity_type")
+    private Byte identityType;
 
-    private Byte sex;
+    private String identifier;
 
-    @Column(name = "followed_num")
-    private Long followedNum;
-
-    @Column(name = "follower_num")
-    private Long followerNum;
-
-    private Byte status;
+    private String credential;
 
     @Column(name = "created_time")
     private Date createdTime;
