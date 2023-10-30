@@ -1,4 +1,4 @@
-package com.niuktok.backend.user.config;
+package com.niuktok.backend.common.config;
 
 import feign.Request;
 import feign.RequestInterceptor;

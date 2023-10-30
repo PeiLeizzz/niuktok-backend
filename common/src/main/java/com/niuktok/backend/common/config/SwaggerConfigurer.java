@@ -1,4 +1,4 @@
-package com.niuktok.backend.user.config;
+package com.niuktok.backend.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,15 +18,15 @@ public class SwaggerConfigurer {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.niuktok.backend.user.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.niuktok.backend"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("UserService-Swagger")
-                .version("1.0")
+                .title("Niuktok-Swagger")
+                .version("1.0.0")
                 .build();
     }
 }
