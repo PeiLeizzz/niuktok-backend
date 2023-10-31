@@ -1,5 +1,7 @@
 package com.niuktok.backend.common.config;
 
+import com.niuktok.backend.common.plugin.EnumModelPropertyBuilderPlugin;
+import com.niuktok.backend.common.plugin.EnumParameterBuilderPlugin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -28,5 +30,16 @@ public class SwaggerConfigurer {
                 .title("Niuktok-Swagger")
                 .version("1.0.0")
                 .build();
+    }
+
+    @Bean
+    public EnumModelPropertyBuilderPlugin enumModelPropertyBuilderPlugin() {
+        return new EnumModelPropertyBuilderPlugin();
+    }
+
+
+    @Bean
+    public EnumParameterBuilderPlugin enumParameterBuilderPlugin() {
+        return new EnumParameterBuilderPlugin();
     }
 }
