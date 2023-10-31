@@ -28,9 +28,11 @@
         <mysql.version>8.0.31</mysql.version>
         <mybatis-starter.version>2.2.2</mybatis-starter.version>
         <mapper-starter.version>2.1.5</mapper-starter.version>
+        <mybatis-plus.version>3.5.4</mybatis-plus.version>
         <swagger.version>2.9.2</swagger.version>
         <redission.version>3.17.1</redission.version>
         <hutool.version>4.5.15</hutool.version>
+        <yitter-idGenerator.version>1.1.3-RELEASE</yitter-idGenerator.version>
     </properties>
 
     <dependencyManagement>
@@ -109,6 +111,11 @@
                 <version>${mapper-starter.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
@@ -127,6 +134,11 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.lmlx66</groupId>
+                <artifactId>yitter-idgenerator-spring-cloud-starter</artifactId>
+                <version>${yitter-idGenerator.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

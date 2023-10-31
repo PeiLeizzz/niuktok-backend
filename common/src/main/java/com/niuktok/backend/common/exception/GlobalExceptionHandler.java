@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "com.niuktok.backend")
 @Slf4j
 public class GlobalExceptionHandler {
     /**

@@ -37,7 +37,6 @@ public class SwaggerConfigurer {
         return new EnumModelPropertyBuilderPlugin();
     }
 
-
     @Bean
     public EnumParameterBuilderPlugin enumParameterBuilderPlugin() {
         return new EnumParameterBuilderPlugin();
