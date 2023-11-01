@@ -30,7 +30,7 @@ public class UserController {
     @ApiOperation("获取用户基本信息")
     public GenericResponseVO<UserInfoVO> getUserInfo(@PathVariable(value = "id", required = true)
                                                      @Min(value = 0, message = "用户 ID 不能为负数")
-                                                     Integer userID) {
+                                                     Long userID) {
         return GenericResponseVO.ok(userService.getUserInfo(userID));
     }
 }

@@ -1,6 +1,6 @@
 package com.niuktok.backend.user.pojo.dto;
 
-import com.niuktok.backend.common.def.IdentifierType;
+import com.niuktok.backend.common.def.IdentityType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,5 +31,5 @@ public class UserRegisterDTO {
 
     @ApiModelProperty(value = "登陆标识类型", dataType = "int", required = true)
     @NotNull(message = "登陆标识类型不能为空")
-    private IdentifierType identifierType;
+    private IdentityType identityType;
 }
