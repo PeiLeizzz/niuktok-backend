@@ -14,13 +14,13 @@ import lombok.ToString;
 public class Message implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
 
     @Column(name = "from_user_id")
-    private Integer fromUserId;
+    private Long fromUserId;
 
     @Column(name = "to_user_id")
-    private Integer toUserId;
+    private Long toUserId;
 
     private String content;
 

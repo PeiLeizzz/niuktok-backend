@@ -14,13 +14,13 @@ import lombok.ToString;
 public class UserVideoFavorite implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @Column(name = "video_id")
-    private Integer videoId;
+    private Long videoId;
 
     @Column(name = "created_time")
     private Date createdTime;

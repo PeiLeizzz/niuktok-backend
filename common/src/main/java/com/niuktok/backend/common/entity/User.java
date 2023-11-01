@@ -3,9 +3,6 @@ package com.niuktok.backend.common.entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
-
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,8 +14,7 @@ import lombok.ToString;
 public class User implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer id;
+    private Long id;
 
     private String username;
 

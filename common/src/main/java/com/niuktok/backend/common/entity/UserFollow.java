@@ -14,13 +14,13 @@ import lombok.ToString;
 public class UserFollow implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @Column(name = "follower_id")
-    private Integer followerId;
+    private Long followerId;
 
     @Column(name = "created_time")
     private Date createdTime;

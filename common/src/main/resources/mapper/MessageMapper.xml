@@ -5,9 +5,9 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="from_user_id" jdbcType="INTEGER" property="fromUserId" />
-    <result column="to_user_id" jdbcType="INTEGER" property="toUserId" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="from_user_id" jdbcType="BIGINT" property="fromUserId" />
+    <result column="to_user_id" jdbcType="BIGINT" property="toUserId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="is_read" jdbcType="TINYINT" property="isRead" />

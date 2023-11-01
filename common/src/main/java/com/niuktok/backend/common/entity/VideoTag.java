@@ -14,7 +14,7 @@ import lombok.ToString;
 public class VideoTag implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
 
     private String title;
 

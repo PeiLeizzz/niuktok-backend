@@ -5,11 +5,11 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="from_user_id" jdbcType="INTEGER" property="fromUserId" />
-    <result column="to_user_id" jdbcType="INTEGER" property="toUserId" />
-    <result column="video_id" jdbcType="INTEGER" property="videoId" />
-    <result column="father_comment_id" jdbcType="INTEGER" property="fatherCommentId" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="from_user_id" jdbcType="BIGINT" property="fromUserId" />
+    <result column="to_user_id" jdbcType="BIGINT" property="toUserId" />
+    <result column="video_id" jdbcType="BIGINT" property="videoId" />
+    <result column="father_comment_id" jdbcType="BIGINT" property="fatherCommentId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="like_num" jdbcType="BIGINT" property="likeNum" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />

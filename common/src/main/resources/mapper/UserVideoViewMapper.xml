@@ -5,9 +5,9 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="video_id" jdbcType="INTEGER" property="videoId" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="video_id" jdbcType="BIGINT" property="videoId" />
     <result column="count" jdbcType="INTEGER" property="count" />
     <result column="last_progress" jdbcType="INTEGER" property="lastProgress" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />

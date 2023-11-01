@@ -14,10 +14,10 @@ import lombok.ToString;
 public class UserAuth implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @Column(name = "identity_type")
     private Byte identityType;

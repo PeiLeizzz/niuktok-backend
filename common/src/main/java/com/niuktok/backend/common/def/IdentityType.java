@@ -7,7 +7,7 @@ import com.niuktok.backend.common.annotation.SwaggerDisplayEnum;
  * 登陆标识类型枚举类
  */
 @SwaggerDisplayEnum(index = "code", name = "description")
-public enum IdentifierType implements BaseEnum<Byte> {
+public enum IdentityType implements BaseEnum<Byte> {
     USERNAME((byte) 0, "username"),
     PHONE((byte) 1, "phone"),
     EMAIL((byte) 2, "email");
@@ -16,7 +16,7 @@ public enum IdentifierType implements BaseEnum<Byte> {
     private final Byte code;
     private final String description;
 
-    IdentifierType(Byte code, String msg) {
+    IdentityType(Byte code, String msg) {
         this.code = code;
         this.description = msg;
     }
@@ -29,10 +29,10 @@ public enum IdentifierType implements BaseEnum<Byte> {
         return description;
     }
 
-    public static IdentifierType getByCode(Byte code) {
-        for (IdentifierType identifierType : IdentifierType.values()) {
-            if (identifierType.getCode().equals(code)) {
-                return identifierType;
+    public static IdentityType getByCode(Byte code) {
+        for (IdentityType identityType : IdentityType.values()) {
+            if (identityType.getCode().equals(code)) {
+                return identityType;
             }
         }
         return null;

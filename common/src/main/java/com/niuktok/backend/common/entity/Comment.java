@@ -14,19 +14,19 @@ import lombok.ToString;
 public class Comment implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
 
     @Column(name = "from_user_id")
-    private Integer fromUserId;
+    private Long fromUserId;
 
     @Column(name = "to_user_id")
-    private Integer toUserId;
+    private Long toUserId;
 
     @Column(name = "video_id")
-    private Integer videoId;
+    private Long videoId;
 
     @Column(name = "father_comment_id")
-    private Integer fatherCommentId;
+    private Long fatherCommentId;
 
     private String content;
 
