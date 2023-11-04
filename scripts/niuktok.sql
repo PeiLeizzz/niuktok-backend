@@ -80,7 +80,7 @@ CREATE TABLE `user_auth` (
   `user_id` bigint unsigned NOT NULL,
   `identity_type` tinyint NOT NULL,
   `identifier` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `credential` varchar(32) COLLATE utf8mb4_general_ci NOT NULL,
+  `credential` varchar(64) COLLATE utf8mb4_general_ci NOT NULL,
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_time` timestamp NULL DEFAULT NULL,

@@ -13,6 +13,7 @@
         <module>gateway-service</module>
         <module>user-service</module>
         <module>redis-service</module>
+        <module>auth-service</module>
     </modules>
 
     <properties>
@@ -23,6 +24,7 @@
         <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring-boot.version>2.6.13</spring-boot.version>
+        <spring-cloud-security.version>2.2.5.RELEASE</spring-cloud-security.version>
         <rocketmq.version>4.9.4</rocketmq.version>
         <druid.version>1.2.8</druid.version>
         <mysql.version>8.0.31</mysql.version>
@@ -33,6 +35,7 @@
         <redission.version>3.17.1</redission.version>
         <hutool.version>4.5.15</hutool.version>
         <yitter-idGenerator.version>1.1.2-RELEASE</yitter-idGenerator.version>
+        <fastjson.version>2.0.41</fastjson.version>
     </properties>
 
     <dependencyManagement>
@@ -139,6 +142,16 @@
                 <groupId>io.github.lmlx66</groupId>
                 <artifactId>yitter-idgenerator-spring-cloud-starter</artifactId>
                 <version>${yitter-idGenerator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-security</artifactId>
+                <version>${spring-cloud-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

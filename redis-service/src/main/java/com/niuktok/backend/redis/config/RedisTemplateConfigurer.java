@@ -1,5 +1,6 @@
 package com.niuktok.backend.redis.config;
 
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -13,7 +14,7 @@ public class RedisTemplateConfigurer {
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         redisTemplate.setKeySerializer(stringRedisSerializer);
 
-        Jackson2JsonRedisSerializer<Object> objectRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+        FastJsonRedisSerializer<Object> objectRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
         redisTemplate.setValueSerializer(objectRedisSerializer);
         return redisTemplate;
     }

@@ -12,6 +12,11 @@ public enum ResponseStatusType implements BaseEnum<Integer> {
     INVALID_PARAMS(2, "invalid params"),
     METHOD_NOT_ALLOWED(3, "method not allowed"),
     INTERNAL_SERVER_ERROR(4, "internal server error"),
+    UNAUTHORIZED(5, "unauthorized"),
+    WRONG_CREDENTIAL(6, "wrong credential"),
+    NO_PERMISSIONS(7, "no permissions"),
+    EXPIRED_TOKEN(8, "expired token"),
+    WRONG_TOKEN(9, "wrong token"),
 
     // 业务状态
     // 用户模块
