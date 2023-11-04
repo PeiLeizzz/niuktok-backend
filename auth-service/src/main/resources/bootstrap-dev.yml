@@ -25,4 +25,4 @@ spring:
 env: dev
 logging:
   level:
-    root: info
+    root: debug

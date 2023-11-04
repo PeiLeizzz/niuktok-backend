@@ -18,30 +18,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * 授权
  */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
+    private List<String> ignoreUrls;
+
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, List<String> ignoreUrls) {
         super(authenticationManager);
+        this.ignoreUrls = ignoreUrls;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-
-        if (request.getServletPath().equals("/register")) {
-            chain.doFilter(request, response);
-            return;
+        for (String ignoreUrl : ignoreUrls) {
+            if (request.getServletPath().matches(ignoreUrl)) {
+                chain.doFilter(request, response);
+                return;
+            }
         }
         String tokenHeader = request.getHeader(JwtTokenUtil.TOKEN_HEADER);
         // 如果请求头中没有 Authorization 信息则直接拦截
         if (tokenHeader == null || !tokenHeader.startsWith(JwtTokenUtil.TOKEN_PREFIX)) {
             BaseResponseVO responseVO = new BaseResponseVO(ResponseStatusType.UNAUTHORIZED);
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
@@ -55,7 +59,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             SecurityContextHolder.getContext().setAuthentication(getAuthentication(tokenHeader));
         } catch (NiuktokException e) {
             BaseResponseVO responseVO = new BaseResponseVO(e.getResponseStatusType());
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
@@ -70,18 +73,22 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     // 这里从 Token 中获取用户信息
     private UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) throws NiuktokException {
         String token = tokenHeader.replace(JwtTokenUtil.TOKEN_PREFIX, "");
-        boolean expiration = JwtTokenUtil.isExpiration(token);
-        if (expiration) {
-            throw new NiuktokException(ResponseStatusType.EXPIRED_TOKEN);
-        }
+        try {
+            boolean expiration = JwtTokenUtil.isExpiration(token);
+            if (expiration) {
+                throw new NiuktokException(ResponseStatusType.EXPIRED_TOKEN);
+            }
 
-        String userID = JwtTokenUtil.getUserID(token);
-        String role = JwtTokenUtil.getUserRole(token);
-        if (userID == null) {
-            throw new NiuktokException(ResponseStatusType.WRONG_TOKEN);
+            String userID = JwtTokenUtil.getUserID(token);
+            String role = JwtTokenUtil.getUserRole(token);
+            if (userID == null) {
+                throw new NiuktokException(ResponseStatusType.WRONG_TOKEN);
+            }
+            return new UsernamePasswordAuthenticationToken(userID, null,
+                    Collections.singleton(new SimpleGrantedAuthority(role))
+            );
+        } catch (Exception e) {
+            throw new NiuktokException(ResponseStatusType.WRONG_TOKEN, e);
         }
-        return new UsernamePasswordAuthenticationToken(userID, null,
-                Collections.singleton(new SimpleGrantedAuthority(role))
-        );
     }
 }

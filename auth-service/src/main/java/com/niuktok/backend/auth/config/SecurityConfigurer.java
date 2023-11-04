@@ -4,10 +4,10 @@ import com.niuktok.backend.auth.filter.JWTAuthenticationFilter;
 import com.niuktok.backend.auth.filter.JWTAuthorizationFilter;
 import com.niuktok.backend.auth.handler.JwtAccessDeniedHandler;
 import com.niuktok.backend.auth.handler.JwtUnauthorizedEntryPoint;
+import com.niuktok.backend.common.config.AuthConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -26,13 +26,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private AuthConfigurer authConfigurer;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/register").permitAll();
-        http.authorizeRequests().anyRequest().authenticated()
+        http.authorizeRequests().anyRequest().permitAll()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), authConfigurer.getIgnoreUrls()))
                 // 不需要 Session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

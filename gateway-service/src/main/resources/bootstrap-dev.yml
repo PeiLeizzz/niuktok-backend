@@ -23,3 +23,6 @@ spring:
             group: ${env}
             refresh: true
 env: dev
+logging:
+  level:
+    root: debug

@@ -1,6 +1,10 @@
 package com.niuktok.backend.common.def;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 响应状态枚举类
@@ -38,5 +42,18 @@ public enum ResponseStatusType implements BaseEnum<Integer> {
 
     public String getDescription() {
         return description;
+    }
+
+    @JsonIgnore
+    private static final Map<Integer, ResponseStatusType> responseStatusMap = new HashMap<>();
+
+    static {
+        for (ResponseStatusType responseStatusType : ResponseStatusType.values()) {
+            responseStatusMap.put(responseStatusType.getCode(), responseStatusType);
+        }
+    }
+
+    public static ResponseStatusType getByCode(Integer code) {
+        return responseStatusMap.get(code);
     }
 }

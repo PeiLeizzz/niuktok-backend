@@ -1,8 +1,6 @@
 package com.niuktok.backend.auth.entity;
 
 import com.niuktok.backend.common.entity.User;
-import com.niuktok.backend.common.entity.UserAuth;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 

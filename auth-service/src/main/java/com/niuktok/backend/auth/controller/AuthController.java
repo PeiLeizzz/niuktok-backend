@@ -6,16 +6,13 @@ import com.niuktok.backend.common.pojo.vo.BaseResponseVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @Validated
-public class AuthController {
+public class AuthController implements com.niuktok.backend.common.controller.redis.AuthController {
     @Autowired
     private AuthService authService;
 
@@ -26,8 +23,8 @@ public class AuthController {
         return BaseResponseVO.ok();
     }
 
-    @GetMapping("test")
-    public BaseResponseVO test() {
+    @RequestMapping (value = "${customize.service.auth.entry-point.prefix}")
+    public BaseResponseVO auth() {
         return BaseResponseVO.ok();
     }
 }

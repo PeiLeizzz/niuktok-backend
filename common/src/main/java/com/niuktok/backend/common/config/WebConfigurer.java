@@ -1,5 +1,6 @@
 package com.niuktok.backend.common.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -8,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  * mvc 配置类，主要用来做静态资源的映射
  */
 @Configuration
+@ConditionalOnMissingClass("com.niuktok.backend.gateway.GatewayApplication")
 public class WebConfigurer extends WebMvcConfigurationSupport {
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {

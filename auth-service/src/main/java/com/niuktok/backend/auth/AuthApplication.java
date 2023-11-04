@@ -8,13 +8,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import tk.mybatis.spring.annotation.MapperScan;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.niuktok.backend")
 @EnableDiscoveryClient
 @EnableWebSecurity
 @EnableFeignClients
 @EnableTransactionManagement
 @MapperScan({"com.niuktok.backend.auth.mapper",
         "com.niuktok.backend.common.mapper"})
+// TODO: security 和 swagger 有冲突，目前文档页面仍旧加载不出来
 public class AuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class, args);

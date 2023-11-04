@@ -6,20 +6,32 @@ import feign.RequestTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 /**
  * Feign 拓展配置类，适配向其他服务请求的需要
  */
 @Configuration
 public class FeignConfigurer implements RequestInterceptor {
-    /**
-     * 实现 RequestInterceptor 拦截器的 apply 方法，以便能够在请求其他服务时携带 Cookie
-     * Cookie 中需要存放真实、满足权限的 uid
-     * 过期时间尽量设置长一点
-     */
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        requestTemplate.header("Cookie", "uid=1; Path=/; Expires=Sun, 29 Oct 2100 06:24:31 GMT;");
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        // 当主线程的请求执行完毕后，Servlet 容器会被销毁当前的 Servlet，因此在这里需要做判空
+        if (attributes != null) {
+            HttpServletRequest request = attributes.getRequest();
+            Enumeration<String> headerNames = request.getHeaderNames();
+            while (headerNames.hasMoreElements()) {
+                String name = headerNames.nextElement();
+                // 不能把所有消息头都传递下去，否则会引起其他异常；header 的 name 都是小写
+                if (name.equals("Authorization")) {
+                    requestTemplate.header(name, request.getHeader(name));
+                }
+            }
+        }
     }
 
     // 请求其他服务的连接时间，默认 50s，Nacos 上可动态配置

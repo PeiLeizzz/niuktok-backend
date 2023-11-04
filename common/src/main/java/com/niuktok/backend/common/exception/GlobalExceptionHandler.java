@@ -5,6 +5,7 @@ import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.pojo.vo.BaseResponseVO;
 import com.niuktok.backend.common.pojo.vo.GenericResponseVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -22,6 +23,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice(basePackages = "com.niuktok.backend")
+@ConditionalOnMissingClass("com.niuktok.backend.gateway.GatewayApplication")
 @Slf4j
 public class GlobalExceptionHandler {
     /**
@@ -81,7 +83,7 @@ public class GlobalExceptionHandler {
      * 未知异常
      */
     @ExceptionHandler(Exception.class)
-    public BaseResponseVO UnNoException(Exception e) {
+    public BaseResponseVO UnknownException(Exception e) {
         log.error("发生未知异常, msg: {}, cause: {}", e.getMessage(), e.getCause());
         e.printStackTrace();
         return new BaseResponseVO(ResponseStatusType.INTERNAL_SERVER_ERROR);
