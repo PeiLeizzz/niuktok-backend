@@ -17,6 +17,6 @@ else exit 1; fi;
 # 重新 build 并启动主工程容器
 echo 'docker stop-build-run...'
 sudo docker-compose -f scripts/dockercompose.yaml --env-file config/deploy-${env}.env config
-sudo docker-compose -f scripts/dockercompose.yaml --env-file config/deploy-${env}.env rm -f
 sudo docker-compose -f scripts/dockercompose.yaml --env-file config/deploy-${env}.env down --rmi all
+sudo docker-compose -f scripts/dockercompose.yaml --env-file config/deploy-${env}.env rm -f
 sudo docker-compose -f scripts/dockercompose.yaml --env-file config/deploy-${env}.env up -d 
