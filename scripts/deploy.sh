@@ -6,7 +6,8 @@ echo 'install backend...'
 mvn clean
 if [[ $? -ne '0' ]]; then echo 'build failed'; exit 1; fi;
 
-mvn package -B -Dmaven.test.skip=true;
+# maven jre >= 11
+mvn package -B -Dmaven.test.skip=true -s ~/maven/repository/settings.xml
 if [[ $? -ne '0' ]]; then echo 'build failed'; exit 1; fi;
 
 if [[ $CI_BUILD_REF_NAME =~ dev ]]; then env=dev;
@@ -15,6 +16,7 @@ else exit 1; fi;
 
 # 重新 build 并启动主工程容器
 echo 'docker stop-build-run...'
-sudo docker-compose rm -f
-sudo docker-compose down --rmi all
-sudo docker-compose up -d --env-file config/deploy-${env}.env
+sudo docker-compose -f scripts/dockercompose.yaml --env-file config/deploy-${env}.env config
+sudo docker-compose -f scripts/dockercompose.yaml --env-file config/deploy-${env}.env rm -f
+sudo docker-compose -f scripts/dockercompose.yaml --env-file config/deploy-${env}.env down --rmi all
+sudo docker-compose -f scripts/dockercompose.yaml --env-file config/deploy-${env}.env up -d 
