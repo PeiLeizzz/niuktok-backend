@@ -44,3 +44,25 @@ services:
     environment:
       - envType=${env}
     network_mode: host
+  video-service:
+    build:
+      context: ../video-service
+      dockerfile: dockerfile
+    image: niuktok-video-service:${env}_${version}
+    container_name: niuktok-video-service-${env}-${version}
+    ports:
+      - "${video_service_port}:${video_service_port}"
+    environment:
+      - envType=${env}
+    network_mode: host
+  interactive-service:
+    build:
+      context: ../interactive-service
+      dockerfile: dockerfile
+    image: niuktok-interactive-service:${env}_${version}
+    container_name: niuktok-interactive-service-${env}-${version}
+    ports:
+      - "${interactive_service_port}:${interactive_service_port}"
+    environment:
+      - envType=${env}
+    network_mode: host
