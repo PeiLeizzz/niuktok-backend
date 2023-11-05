@@ -1,0 +1,26 @@
+version: '3'
+services:
+  gateway-service:
+    image: gateway-service:${env}_${version}
+    container_name: gateway-service-${env}-${version}
+    ports:
+      - "${gateway-service-port}:${gateway-service-port}"
+    network_mode: host
+  auth-service:
+    image: auth-service:${env}_${version}
+    container_name: auth-service-${env}-${version}
+    ports:
+      - "${auth-service-port}:${auth-service-port}"
+    network_mode: host
+  redis-service:
+    image: redis-service:${env}_${version}
+    container_name: redis-service-${env}-${version}
+    ports:
+      - "${redis-service-port}:${redis-service-port}"
+    network_mode: host
+  user-service:
+    image: user-service:${env}_${version}
+    container_name: user-service-${env}-${version}
+    ports:
+      - "${user-service-port}:${user-service-port}"
+    network_mode: host

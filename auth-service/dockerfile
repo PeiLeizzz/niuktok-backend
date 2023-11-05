@@ -1,0 +1,5 @@
+FROM openjdk:11.0.11-jdk
+ADD target/auth-service-1.0-SNAPSHOT.jar /auth-service.jar
+ENV envType ${envType}
+ENV JAVA_OPTS="-Xms256m -Xmx512m -Xmn256m"
+CMD ["sh", "-c", "java $JAVA_OPTS -jar /auth-service.jar --spring.profiles.active=${envType}"]
