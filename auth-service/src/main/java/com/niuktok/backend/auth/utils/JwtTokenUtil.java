@@ -84,7 +84,15 @@ public class JwtTokenUtil {
             if (!response.getStatus().equals(ResponseStatusType.SUCCESS.getCode())) {
                 throw new NiuktokException(ResponseStatusType.ERROR);
             }
-            return !response.getData();
+            if (!response.getData()) {
+                return true;
+            }
+            // 可能已经重新生成 Token
+            GenericResponseVO<String> responseToken = redisFeign.get(TOKEN_REDIS_KEY + userID);
+            if (!response.getStatus().equals(ResponseStatusType.SUCCESS.getCode())) {
+                throw new NiuktokException(ResponseStatusType.ERROR);
+            }
+            return !token.equals(responseToken.getData());
         } catch (Exception e) {
             throw new NiuktokException(ResponseStatusType.ERROR);
         }

@@ -14,6 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -60,6 +61,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
             if (!ResponseStatusType.SUCCESS.getCode().equals(code)) {
                 return responseErrorMessage(exchange, new BaseResponseVO(ResponseStatusType.getByCode(code)));
             }
+            String userID = (String) body.get("data");
+            ServerHttpRequest.Builder requestBuilder = exchange.getRequest().mutate();
+            requestBuilder.headers(k -> k.set("userID", userID));
+            ServerHttpRequest request = requestBuilder.build();
+            exchange.mutate().request(request).build();
             return chain.filter(exchange);
         } catch (ExecutionException e) {
             Throwable cause = e.getCause();

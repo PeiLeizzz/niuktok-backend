@@ -66,7 +66,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             role = authority.getAuthority();
         }
 
-        String token = jwtTokenUtil.createToken(jwtUser.getUsername(), role, isRemember);
+        String token = jwtTokenUtil.createToken(jwtUser.getUser().getId().toString(), role, isRemember);
         response.setHeader(JwtTokenUtil.TOKEN_HEADER, JwtTokenUtil.TOKEN_PREFIX + token);
         BaseResponseVO responseVO = BaseResponseVO.ok("登陆成功");
         response.setContentType("application/json");
