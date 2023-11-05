@@ -25,4 +25,7 @@ public interface RedisController {
                    @RequestParam("seconds")
                    @NotNull(message = "过期时间（秒）不能为空")
                    @Positive(message = "过期时间（秒）不能为负数") Integer expireSeconds);
+
+    @DeleteMapping(value = "/del")
+    BaseResponseVO delete(@RequestParam("key") @NotBlank(message = "key 不能为空") String key);
 }

@@ -2,6 +2,9 @@ package com.niuktok.backend.auth.service.impl;
 
 import com.hy.corecode.idgen.WFGIdGenerator;
 import com.niuktok.backend.auth.service.AuthService;
+import com.niuktok.backend.auth.service.feign.RedisFeign;
+import com.niuktok.backend.auth.utils.JwtTokenUtil;
+import com.niuktok.backend.common.def.IdentityType;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.entity.User;
 import com.niuktok.backend.common.entity.UserAuth;
@@ -28,6 +31,9 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private RedisFeign redisFeign;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void register(UserRegisterDTO userRegisterDTO) {
@@ -53,5 +59,28 @@ public class AuthServiceImpl implements AuthService {
         userAuth.setUserId(user.getId());
         userAuth.setCredential(passwordEncoder.encode(userRegisterDTO.getCredential()));
         userAuthMapper.insertSelective(userAuth);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void resetCredential(Long userID, String identifier, String credential, IdentityType identityType) {
+        if (userMapper.selectByPrimaryKey(userID) == null) {
+            throw new NiuktokException(ResponseStatusType.NOT_EXISTED_USER);
+        }
+
+        UserAuth userAuth = new UserAuth();
+        userAuth.setUserId(userID);
+        userAuth.setIdentifier(identifier);
+        userAuth.setIdentityType(identityType.getCode());
+        UserAuth userAuthInDB = userAuthMapper.selectOne(userAuth);
+        if (userAuthInDB == null) {
+            throw new NiuktokException(ResponseStatusType.NOT_EXISTED_IDENTIFIER);
+        }
+        userAuth.setCredential(passwordEncoder.encode(credential));
+        userAuth.setId(userAuthInDB.getId());
+        userAuthMapper.updateByPrimaryKeySelective(userAuth);
+
+        // 删除登陆信息
+        redisFeign.delete(JwtTokenUtil.TOKEN_REDIS_KEY + userID);
     }
 }

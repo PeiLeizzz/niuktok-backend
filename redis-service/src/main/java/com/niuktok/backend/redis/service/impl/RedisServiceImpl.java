@@ -39,4 +39,9 @@ public class RedisServiceImpl implements RedisService {
     public void expire(String key, Integer expireSeconds) {
         redisTemplate.expire(key, expireSeconds, TimeUnit.SECONDS);
     }
+
+    @Override
+    public void delete(String key) {
+        redisTemplate.delete(key);
+    }
 }

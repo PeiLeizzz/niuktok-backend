@@ -10,4 +10,6 @@ public interface RedisService {
     Boolean exists(String key);
 
     void expire(String key, Integer expireSeconds);
+
+    void delete(String key);
 }

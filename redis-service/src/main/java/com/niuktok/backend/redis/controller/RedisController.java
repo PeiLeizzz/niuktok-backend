@@ -56,4 +56,11 @@ public class RedisController implements com.niuktok.backend.common.controller.re
         redisService.expire(key, expireSeconds);
         return BaseResponseVO.ok();
     }
+
+    @Override
+    @DeleteMapping(value = "/del")
+    public BaseResponseVO delete(@RequestParam("key") @NotBlank(message = "key 不能为空") String key) {
+        redisService.delete(key);
+        return BaseResponseVO.ok();
+    }
 }
