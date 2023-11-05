@@ -3,10 +3,14 @@ package com.niuktok.backend.auth.controller;
 import com.niuktok.backend.auth.service.AuthService;
 import com.niuktok.backend.auth.pojo.dto.UserRegisterDTO;
 import com.niuktok.backend.common.pojo.vo.BaseResponseVO;
+import com.niuktok.backend.common.pojo.vo.GenericResponseVO;
+
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 import javax.validation.Valid;
 
@@ -23,8 +27,9 @@ public class AuthController implements com.niuktok.backend.common.controller.aut
         return BaseResponseVO.ok();
     }
 
-    @RequestMapping (value = "${customize.service.auth.entry-point.prefix}")
-    public BaseResponseVO auth() {
-        return BaseResponseVO.ok();
+    @Override
+    @RequestMapping(value = "${customize.service.auth.entry-point.prefix}")
+    public GenericResponseVO<String> auth(Principal principal) {
+        return GenericResponseVO.ok(principal.getName(), null);
     }
 }

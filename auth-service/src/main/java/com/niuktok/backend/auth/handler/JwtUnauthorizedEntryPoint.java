@@ -3,7 +3,6 @@ package com.niuktok.backend.auth.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.pojo.vo.BaseResponseVO;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;

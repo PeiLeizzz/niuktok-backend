@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@ApiModel("用户认证信息")
+@ApiModel(description = "用户认证信息")
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserAuthVO {

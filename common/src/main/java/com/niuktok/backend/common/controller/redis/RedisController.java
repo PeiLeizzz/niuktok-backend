@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 public interface RedisController {
@@ -22,6 +23,6 @@ public interface RedisController {
     @GetMapping(value = "/expire")
     BaseResponseVO expire(@RequestParam("key") @NotBlank(message = "key 不能为空") String key,
                    @RequestParam("seconds")
-                   @NotBlank(message = "过期时间（秒）不能为空")
+                   @NotNull(message = "过期时间（秒）不能为空")
                    @Positive(message = "过期时间（秒）不能为负数") Integer expireSeconds);
 }

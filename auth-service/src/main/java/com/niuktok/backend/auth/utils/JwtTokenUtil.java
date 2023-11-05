@@ -7,7 +7,6 @@ import com.niuktok.backend.common.pojo.dto.redis.RedisSetDTO;
 import com.niuktok.backend.common.pojo.vo.BaseResponseVO;
 import com.niuktok.backend.common.pojo.vo.GenericResponseVO;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,17 +49,21 @@ public class JwtTokenUtil {
                         .setSubject(userID)
                         .setIssuedAt(new Date())
                         .compact();
-        BaseResponseVO response = redisFeign.set(
-                new RedisSetDTO(
-                        TOKEN_REDIS_KEY + userID,
-                        token,
-                        rememberMe ? EXPIRATION_REMEMBER : EXPIRATION
-                )
-        );
-        if (!response.getStatus().equals(ResponseStatusType.SUCCESS.getCode())) {
+        try {
+            BaseResponseVO response = redisFeign.set(
+                    new RedisSetDTO(
+                            TOKEN_REDIS_KEY + userID,
+                            token,
+                            rememberMe ? EXPIRATION_REMEMBER : EXPIRATION
+                    )
+            );
+            if (!response.getStatus().equals(ResponseStatusType.SUCCESS.getCode())) {
+                throw new NiuktokException(ResponseStatusType.ERROR);
+            }
+            return token;
+        } catch (Exception e) {
             throw new NiuktokException(ResponseStatusType.ERROR);
         }
-        return token;
     }
 
     // 从 token 中获取 userID
@@ -76,11 +79,23 @@ public class JwtTokenUtil {
     // 是否已过期
     public boolean isExpiration(String token) {
         String userID = getUserID(token);
-        GenericResponseVO<Boolean> response = redisFeign.exists(TOKEN_REDIS_KEY + userID);
-        if (!response.getStatus().equals(ResponseStatusType.SUCCESS.getCode())) {
+        try {
+            GenericResponseVO<Boolean> response = redisFeign.exists(TOKEN_REDIS_KEY + userID);
+            if (!response.getStatus().equals(ResponseStatusType.SUCCESS.getCode())) {
+                throw new NiuktokException(ResponseStatusType.ERROR);
+            }
+            if (!response.getData()) {
+                return true;
+            }
+            // 可能已经重新生成 Token
+            GenericResponseVO<String> responseToken = redisFeign.get(TOKEN_REDIS_KEY + userID);
+            if (!response.getStatus().equals(ResponseStatusType.SUCCESS.getCode())) {
+                throw new NiuktokException(ResponseStatusType.ERROR);
+            }
+            return !token.equals(responseToken.getData());
+        } catch (Exception e) {
             throw new NiuktokException(ResponseStatusType.ERROR);
         }
-        return !response.getData();
     }
 
     // 续期

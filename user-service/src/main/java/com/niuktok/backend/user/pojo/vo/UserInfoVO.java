@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@ApiModel("用户基本信息")
+@ApiModel(description = "用户基本信息")
 public class UserInfoVO {
     @ApiModelProperty("用户名")
     private String username;

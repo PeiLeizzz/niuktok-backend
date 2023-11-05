@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Validated
@@ -32,19 +33,25 @@ public class RedisController implements com.niuktok.backend.common.controller.re
     @Override
     @PostMapping("/set")
     public BaseResponseVO set(@Valid @RequestBody RedisSetDTO redisSetDTO) {
-        redisService.set(redisSetDTO.getKey(), redisSetDTO.getValue());
+        if (redisSetDTO.getExpireSeconds() == null) {
+            redisService.set(redisSetDTO.getKey(), redisSetDTO.getValue());
+        } else {
+            redisService.set(redisSetDTO.getKey(), redisSetDTO.getValue(), redisSetDTO.getExpireSeconds());
+        }
         return BaseResponseVO.ok();
     }
 
+    @Override
     @GetMapping(value = "/exists")
     public GenericResponseVO<Boolean> exists(@RequestParam("key") @NotBlank(message = "key 不能为空") String key) {
         return GenericResponseVO.ok(redisService.exists(key));
     }
 
+    @Override
     @GetMapping(value = "/expire")
     public BaseResponseVO expire(@RequestParam("key") @NotBlank(message = "key 不能为空") String key,
                    @RequestParam("seconds")
-                   @NotBlank(message = "过期时间（秒）不能为空")
+                   @NotNull(message = "过期时间（秒）不能为空")
                    @Positive(message = "过期时间（秒）不能为负数") Integer expireSeconds) {
         redisService.expire(key, expireSeconds);
         return BaseResponseVO.ok();

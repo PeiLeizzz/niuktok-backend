@@ -4,23 +4,26 @@ import com.niuktok.backend.common.pojo.vo.GenericResponseVO;
 import com.niuktok.backend.user.pojo.vo.UserInfoVO;
 import com.niuktok.backend.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.constraints.Min;
-
 @RestController
 @Validated
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/info/{id}", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/info", produces = "application/json;charset=UTF-8")
     @ApiOperation("获取用户基本信息")
-    public GenericResponseVO<UserInfoVO> getUserInfo(@PathVariable(value = "id", required = true)
-                                                     @Min(value = 0, message = "用户 ID 不能为负数")
-                                                     Long userID) {
+    public GenericResponseVO<UserInfoVO> getUserInfo(
+        @RequestHeader("userID") 
+        @NotNull(message = "userID 不能为空") 
+        @Positive(message = "userID 不能为负数") 
+        Long userID) {
         return GenericResponseVO.ok(userService.getUserInfo(userID));
     }
 }
