@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@ApiModel("用户登陆请求体")
+@ApiModel(description = "用户登陆请求体")
 @Data
 public class UserLoginDTO {
     @ApiModelProperty(value = "登陆标识", required = true)

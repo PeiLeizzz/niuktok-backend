@@ -26,6 +26,11 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    public void set(String key, Object value, Integer expireSeconds) {
+        redisTemplate.opsForValue().set(key, value, expireSeconds, TimeUnit.SECONDS);
+    }
+
+    @Override
     public Boolean exists(String key) {
         return redisTemplate.hasKey(key);
     }

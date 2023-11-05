@@ -5,6 +5,8 @@ public interface RedisService {
 
     void set(String key, Object value);
 
+    void set(String key, Object value, Integer expireSeconds);
+
     Boolean exists(String key);
 
     void expire(String key, Integer expireSeconds);

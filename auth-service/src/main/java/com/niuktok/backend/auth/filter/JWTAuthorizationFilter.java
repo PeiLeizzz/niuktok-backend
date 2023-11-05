@@ -5,7 +5,6 @@ import com.niuktok.backend.auth.utils.JwtTokenUtil;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.exception.NiuktokException;
 import com.niuktok.backend.common.pojo.vo.BaseResponseVO;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -94,7 +93,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         } catch (NiuktokException e) {
             throw e;
         } catch (Exception e) {
-            throw new NiuktokException(ResponseStatusType.WRONG_TOKEN, e);
+            throw new NiuktokException(ResponseStatusType.ERROR, e);
         }
     }
 }

@@ -10,7 +10,6 @@ import com.niuktok.backend.common.mapper.UserAuthMapper;
 import com.niuktok.backend.common.mapper.UserMapper;
 import com.niuktok.backend.auth.pojo.dto.UserRegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
