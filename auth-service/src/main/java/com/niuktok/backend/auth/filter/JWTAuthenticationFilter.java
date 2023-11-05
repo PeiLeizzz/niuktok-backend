@@ -28,8 +28,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final ThreadLocal<Boolean> rememberMe = new ThreadLocal<>();
     private final AuthenticationManager authenticationManager;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private final JwtTokenUtil jwtTokenUtil;
+
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil) {
         this.authenticationManager = authenticationManager;
+        this.jwtTokenUtil = jwtTokenUtil;
         super.setFilterProcessesUrl("/login");
     }
 
@@ -63,7 +66,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             role = authority.getAuthority();
         }
 
-        String token = JwtTokenUtil.createToken(jwtUser.getUsername(), role, isRemember);
+        String token = jwtTokenUtil.createToken(jwtUser.getUsername(), role, isRemember);
         response.setHeader(JwtTokenUtil.TOKEN_HEADER, JwtTokenUtil.TOKEN_PREFIX + token);
         BaseResponseVO responseVO = BaseResponseVO.ok("登陆成功");
         response.setContentType("application/json");

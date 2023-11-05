@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Data
 @ToString
@@ -23,4 +24,8 @@ public class RedisSetDTO {
     @ApiModelProperty(value = "value", required = true)
     @NotNull(message = "value 不能为 null")
     private Object value;
+
+    @ApiModelProperty(value = "过期时间（秒）")
+    @Positive(message = "过期时间不能为负数")
+    private Integer expireSeconds;
 }

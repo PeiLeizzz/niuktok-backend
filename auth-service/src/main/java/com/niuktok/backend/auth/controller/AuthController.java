@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 @RestController
 @Validated
-public class AuthController implements com.niuktok.backend.common.controller.redis.AuthController {
+public class AuthController implements com.niuktok.backend.common.controller.auth.AuthController {
     @Autowired
     private AuthService authService;
 

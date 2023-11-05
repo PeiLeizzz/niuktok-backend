@@ -32,19 +32,27 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void register(UserRegisterDTO userRegisterDTO) {
+        // 先检查用户名是否重复
         User user = new User();
         user.setUsername(userRegisterDTO.getUsername());
-        if (userMapper.selectOne(user) != null) {
+        if (userMapper.selectCount(user) > 0) {
             throw new NiuktokException(ResponseStatusType.EXISTED_USER);
         }
+
+        // 再检查登陆凭证是否重复
+        UserAuth userAuth = new UserAuth();
+        userAuth.setIdentifier(userRegisterDTO.getIdentifier());
+        userAuth.setIdentityType(userRegisterDTO.getIdentityType().getCode());
+        if (userMapper.selectCount(user) > 0) {
+            throw new NiuktokException(ResponseStatusType.EXISTED_IDENTIFIER);
+        }
+
+        // 最后插入用户和认证信息
         user.setId(wfgIdGenerator.next());
         userMapper.insertSelective(user);
 
-        UserAuth userAuth = new UserAuth();
         userAuth.setUserId(user.getId());
         userAuth.setCredential(passwordEncoder.encode(userRegisterDTO.getCredential()));
-        userAuth.setIdentifier(userRegisterDTO.getIdentifier());
-        userAuth.setIdentityType(userRegisterDTO.getIdentityType().getCode());
         userAuthMapper.insertSelective(userAuth);
     }
 }

@@ -25,7 +25,8 @@ public enum ResponseStatusType implements BaseEnum<Integer> {
     // 业务状态
     // 用户模块
     EXISTED_USER(10000, "user is already existed"),
-    NOT_EXISTED_USER(10001, "user not existed");
+    NOT_EXISTED_USER(10001, "user not existed"),
+    EXISTED_IDENTIFIER(10002, "identifier is already existed");
 
     @JsonValue
     private final Integer code;

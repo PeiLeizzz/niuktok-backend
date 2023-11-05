@@ -4,6 +4,7 @@ import com.niuktok.backend.auth.filter.JWTAuthenticationFilter;
 import com.niuktok.backend.auth.filter.JWTAuthorizationFilter;
 import com.niuktok.backend.auth.handler.JwtAccessDeniedHandler;
 import com.niuktok.backend.auth.handler.JwtUnauthorizedEntryPoint;
+import com.niuktok.backend.auth.utils.JwtTokenUtil;
 import com.niuktok.backend.common.config.AuthConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,12 +30,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthConfigurer authConfigurer;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().anyRequest().permitAll()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), authConfigurer.getIgnoreUrls()))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtTokenUtil))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtTokenUtil, authConfigurer.getIgnoreUrls()))
                 // 不需要 Session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

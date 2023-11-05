@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
 public class RedisServiceImpl implements RedisService {
 
@@ -21,5 +23,15 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public void set(String key, Object value) {
         redisTemplate.opsForValue().set(key, value);
+    }
+
+    @Override
+    public Boolean exists(String key) {
+        return redisTemplate.hasKey(key);
+    }
+
+    @Override
+    public void expire(String key, Integer expireSeconds) {
+        redisTemplate.expire(key, expireSeconds, TimeUnit.SECONDS);
     }
 }
