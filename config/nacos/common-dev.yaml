@@ -5,7 +5,47 @@ mapper:
   not-empty: false
   identity: MYSQL
 
+wfg:
+# 请一定注意！ WorkerIdBitLength + SeqBitLength + DataCenterIdBitLength <= 22
+  # 1表示雪花漂移算法，2表示传统雪花算法
+  Method: 1
+  # 基础时间，为2022-01-01 00:00:00
+  baseTime: 1640966400000
+  # 数据中心id
+  DataCenterId: 0
+  # 数据中心id位长，默认为0表示不开启数据中心id功能
+  DataCenterIdBitLength: 0
+  # 机器码（当前系统的机器码）
+  WorkerId: 0
+  # 机器码位长（能表示机器码的最大值）
+  WorkerIdBitLength: 1
+  # 序列数位长（能表示机器码的最大序列数）
+  SeqBitLength: 6
+  # 最大序列数（含）
+  MinSeqNumber: 5
+  # 最小序列数（含）
+  MaxSeqNumber: 0
+  # 最大漂移次数，与计算能力有关
+  TopOverCostCount: 2000
+
 customize:
   service:
     redis:
       service-name: redis-service
+    user:
+      service-name: user-service
+    auth:
+      service-name: auth-service
+      entry-point: 
+        url: /authorization_entrypoint
+        prefix: ${customize.service.auth.entry-point.url}/**
+      ignore-urls:
+        - /login
+        - /register
+        - /${customize.service.auth.service-name}/login
+        - /${customize.service.auth.service-name}/register
+        - ${customize.service.auth.entry-point.url}/login
+        - ${customize.service.auth.entry-point.url}/register
+        - /swagger-ui.html
+        - /favicon.ico
+        - /webjars/.*
