@@ -1,2 +1,10 @@
 server:
   port: 28005
+
+qiniu:
+  access-key: bgQHEdgUnYo-bTIEP7OXwMxphw0p7pwtO6j9v2Yq
+  secret-key: J4rrGGQxEi1PaIklQ7INZyBGA3qiZQDKCvgQsbi8
+  bucket: niuktok
+  expire-times: 3600
+  put-policy:
+    return-body: "{\"key\":\"$(key)\",\"hash\":\"$(etag)\"}"
