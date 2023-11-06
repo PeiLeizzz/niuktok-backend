@@ -43,7 +43,9 @@ public class VideoController {
         @Valid
         UploadVideoDTO uploadVideoDTO
     ) {
-        videoService.uploadVideo(userID, uploadVideoDTO.getKey(), uploadVideoDTO.getDescription());
+        videoService.uploadVideo(userID, videoService.getFileInfo(uploadVideoDTO.getKey()),
+            uploadVideoDTO.getKey(), uploadVideoDTO.getTitle(), uploadVideoDTO.getDescription(), 
+            uploadVideoDTO.getVideoPartitionId(), uploadVideoDTO.getTags());
         return BaseResponseVO.ok();
     }
 }
