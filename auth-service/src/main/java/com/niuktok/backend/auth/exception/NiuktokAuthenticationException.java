@@ -1,4 +1,6 @@
-package com.niuktok.backend.common.exception;
+package com.niuktok.backend.auth.exception;
+
+import org.springframework.security.core.AuthenticationException;
 
 import com.niuktok.backend.common.def.ResponseStatusType;
 import lombok.Data;
@@ -7,25 +9,25 @@ import lombok.Data;
  * 业务异常
  */
 @Data
-public class NiuktokException extends RuntimeException {
+public class NiuktokAuthenticationException extends AuthenticationException {
     private ResponseStatusType responseStatusType;
 
-    public NiuktokException(ResponseStatusType responseStatusType) {
+    public NiuktokAuthenticationException(ResponseStatusType responseStatusType) {
         super(responseStatusType.getDescription());
         this.responseStatusType = responseStatusType;
     }
 
-    public NiuktokException(ResponseStatusType responseStatusType, Throwable e) {
+    public NiuktokAuthenticationException(ResponseStatusType responseStatusType, Throwable e) {
         super(responseStatusType.getDescription(), e);
         this.responseStatusType = responseStatusType;
     }
 
-    public NiuktokException(ResponseStatusType responseStatusType, String message) {
+    public NiuktokAuthenticationException(ResponseStatusType responseStatusType, String message) {
         super(message);
         this.responseStatusType = responseStatusType;
     }
 
-    public NiuktokException(ResponseStatusType responseStatusType, String message, Throwable e) {
+    public NiuktokAuthenticationException(ResponseStatusType responseStatusType, String message, Throwable e) {
         super(message, e);
         this.responseStatusType = responseStatusType;
     }

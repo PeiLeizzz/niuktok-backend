@@ -32,6 +32,12 @@ public class BaseResponseVO {
         this.message = status.getDescription();
     }
 
+    public BaseResponseVO(ResponseStatusType status, String msg) {
+        this.timestamp = new Date();
+        this.status = status.getCode();
+        this.message = msg;
+    }
+
     public static BaseResponseVO ok(String msg) {
         BaseResponseVO ans = new BaseResponseVO();
         ans.setMessage(msg);

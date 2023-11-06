@@ -26,7 +26,6 @@ public class UserLoginDTO {
     @NotNull(message = "登陆标识类型不能为空")
     private IdentityType identityType;
 
-    @ApiModelProperty(value = "是否记住登陆状态", required = true)
-    @NotNull(message = "是否记住登陆状态不能为空")
+    @ApiModelProperty(value = "是否记住登陆状态", required = false)
     private Boolean rememberMe;
 }

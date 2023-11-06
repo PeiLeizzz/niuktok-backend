@@ -3,7 +3,6 @@ package com.niuktok.backend.common.exception;
 import cn.hutool.core.util.StrUtil;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.pojo.vo.BaseResponseVO;
-import com.niuktok.backend.common.pojo.vo.GenericResponseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.validation.BindException;
@@ -17,10 +16,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice(basePackages = "com.niuktok.backend")
 @ConditionalOnMissingClass("com.niuktok.backend.gateway.GatewayApplication")
@@ -30,15 +27,15 @@ public class GlobalExceptionHandler {
      * 处理 JSON 请求体调用接口对象参数校验失败抛出的异常（RequestBody）
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public GenericResponseVO<List<String>> jsonParamsException(MethodArgumentNotValidException e) {
+    public BaseResponseVO jsonParamsException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
-        List<String> errorMsgList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
 
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            String msg = String.format("%s: %s", fieldError.getField(), fieldError.getDefaultMessage());
-            errorMsgList.add(msg);
+            String msg = String.format("%s: %s\n", fieldError.getField(), fieldError.getDefaultMessage());
+            sb.append(msg);
         }
-        return new GenericResponseVO<>(ResponseStatusType.INVALID_PARAMS, errorMsgList);
+        return new BaseResponseVO(ResponseStatusType.INVALID_PARAMS, sb.toString());
     }
 
 
@@ -46,29 +43,29 @@ public class GlobalExceptionHandler {
      * 处理单个参数校验失败抛出的异常（RequestParam / PathVariable）
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public GenericResponseVO<List<String>> ParamsException(ConstraintViolationException e) {
-        List<String> errorMsgList = new ArrayList<>();
+    public BaseResponseVO ParamsException(ConstraintViolationException e) {
+        StringBuilder sb = new StringBuilder();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         for (ConstraintViolation<?> violation : violations) {
             StringBuilder message = new StringBuilder();
             Path path = violation.getPropertyPath();
             String[] pathArr = StrUtil.splitToArray(path.toString(), '.');
             String msg = message.append(pathArr[1]).append(violation.getMessage()).toString();
-            errorMsgList.add(msg);
+            sb.append(msg);
+            sb.append('\n');
         }
-        return new GenericResponseVO<>(ResponseStatusType.INVALID_PARAMS, errorMsgList);
+        return new BaseResponseVO(ResponseStatusType.INVALID_PARAMS, sb.toString());
     }
 
     /**
      * 处理 form-data 方式调用接口对象参数校验失败抛出的异常
      */
     @ExceptionHandler(BindException.class)
-    public GenericResponseVO<List<String>> formDaraParamsException(BindException e) {
+    public BaseResponseVO formDaraParamsException(BindException e) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
-        List<String> errorMsgList = fieldErrors.stream()
-                .map(o -> o.getField() + ": " + o.getDefaultMessage())
-                .collect(Collectors.toList());
-        return new GenericResponseVO<>(ResponseStatusType.INVALID_PARAMS, errorMsgList);
+        StringBuilder sb = new StringBuilder();
+        fieldErrors.forEach(o -> sb.append(String.format("%s: %s\n", o.getField(), o.getDefaultMessage())));
+        return new BaseResponseVO(ResponseStatusType.INVALID_PARAMS, sb.toString());
     }
 
     /**
@@ -96,6 +93,6 @@ public class GlobalExceptionHandler {
     public BaseResponseVO BusinessException(NiuktokException e) {
         log.error("发生业务异常, msg: {}, cause: {}", e.getMessage(), e.getCause());
         e.printStackTrace();
-        return new BaseResponseVO(e.getResponseStatusType());
+        return new BaseResponseVO(e.getResponseStatusType(), e.getMessage());
     }
 }

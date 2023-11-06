@@ -48,25 +48,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .and()
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
                 .csrf().disable();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
-        corsConfiguration.setAllowedMethods(Arrays.asList("*"));
-        corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setMaxAge(3600L);
-        corsConfiguration.addExposedHeader("Connection");
-        corsConfiguration.addExposedHeader("Set-Cookie");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",corsConfiguration);
-        return source;
-    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

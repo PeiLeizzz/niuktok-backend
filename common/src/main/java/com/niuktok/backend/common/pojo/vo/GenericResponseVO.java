@@ -33,6 +33,13 @@ public class GenericResponseVO<T> {
         this.message = status.getDescription();
     }
 
+    public GenericResponseVO(ResponseStatusType status, T data, String msg) {
+        this.timestamp = new Date();
+        this.status = status.getCode();
+        this.data = data;
+        this.message = msg;
+    }
+
     public static <T> GenericResponseVO<T> ok(T data, String msg) {
         GenericResponseVO<T> ans = new GenericResponseVO<>();
         ans.setData(data);
