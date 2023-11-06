@@ -63,6 +63,9 @@
         <table tableName = "user_video_like" >
             <generatedKey column="id" sqlStatement="JDBC" />
         </table>
+        <table tableName = "user_video_share" >
+            <generatedKey column="id" sqlStatement="JDBC" />
+        </table>
         <table tableName = "comment" >
             <generatedKey column="id" sqlStatement="JDBC" />
         </table>
