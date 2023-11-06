@@ -1,6 +1,7 @@
 package com.niuktok.backend.user.service.impl;
 
 import com.niuktok.backend.common.def.IdentityType;
+import com.niuktok.backend.common.def.LogicDeleteEnum;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.entity.User;
 import com.niuktok.backend.common.entity.UserAuth;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
         }
         UserAuth userAuth = new UserAuth();
         userAuth.setUserId(userID);
+        userAuth.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
         List<UserAuth> userAuths = userAuthMapper.select(userAuth);
 
         UserInfoVO userInfoVO = new UserInfoVO();
