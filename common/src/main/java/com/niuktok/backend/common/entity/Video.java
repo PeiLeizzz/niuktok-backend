@@ -19,7 +19,12 @@ public class Video implements Serializable {
     @Column(name = "user_id")
     private Long userId;
 
+    private String title;
+
     private String description;
+
+    @Column(name = "video_key")
+    private String videoKey;
 
     @Column(name = "video_path")
     private String videoPath;
@@ -39,6 +44,9 @@ public class Video implements Serializable {
     @Column(name = "share_num")
     private Long shareNum;
 
+    @Column(name = "partition_id")
+    private Long partitionId;
+
     @Column(name = "created_time")
     private Date createdTime;
 
@@ -47,6 +55,9 @@ public class Video implements Serializable {
 
     @Column(name = "deleted_time")
     private Date deletedTime;
+
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
     private String info;
 

@@ -5,6 +5,7 @@ import com.niuktok.backend.auth.service.AuthService;
 import com.niuktok.backend.auth.service.feign.RedisFeign;
 import com.niuktok.backend.auth.utils.JwtTokenUtil;
 import com.niuktok.backend.common.def.IdentityType;
+import com.niuktok.backend.common.def.LogicDeleteEnum;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.entity.User;
 import com.niuktok.backend.common.entity.UserAuth;
@@ -40,15 +41,17 @@ public class AuthServiceImpl implements AuthService {
         // 先检查用户名是否重复
         User user = new User();
         user.setUsername(userRegisterDTO.getUsername());
+        user.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
         if (userMapper.selectCount(user) > 0) {
             throw new NiuktokException(ResponseStatusType.EXISTED_USER);
         }
 
         // 再检查登陆凭证是否重复
         UserAuth userAuth = new UserAuth();
+        userAuth.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
         userAuth.setIdentifier(userRegisterDTO.getIdentifier());
         userAuth.setIdentityType(userRegisterDTO.getIdentityType().getCode());
-        if (userMapper.selectCount(user) > 0) {
+        if (userAuthMapper.selectCount(userAuth) > 0) {
             throw new NiuktokException(ResponseStatusType.EXISTED_IDENTIFIER);
         }
 
@@ -64,11 +67,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void resetCredential(Long userID, String identifier, String credential, IdentityType identityType) {
-        if (userMapper.selectByPrimaryKey(userID) == null) {
+        if (!userMapper.existsWithPrimaryKey(userID)) {
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_USER);
         }
 
         UserAuth userAuth = new UserAuth();
+        userAuth.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
         userAuth.setUserId(userID);
         userAuth.setIdentifier(identifier);
         userAuth.setIdentityType(identityType.getCode());

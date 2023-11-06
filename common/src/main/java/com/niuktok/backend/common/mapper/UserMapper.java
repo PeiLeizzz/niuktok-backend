@@ -1,7 +1,7 @@
 package com.niuktok.backend.common.mapper;
 
 import com.niuktok.backend.common.entity.User;
-import tk.mybatis.mapper.common.Mapper;
+import com.niuktok.backend.common.mapper.base.MyMapper;
 
-public interface UserMapper extends Mapper<User> {
+public interface UserMapper extends MyMapper<User> {
 }

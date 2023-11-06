@@ -13,5 +13,6 @@
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
     <result column="deleted_time" jdbcType="TIMESTAMP" property="deletedTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
   </resultMap>
 </mapper>

@@ -1,7 +1,7 @@
 package com.niuktok.backend.common.mapper;
 
 import com.niuktok.backend.common.entity.Message;
-import tk.mybatis.mapper.common.Mapper;
+import com.niuktok.backend.common.mapper.base.MyMapper;
 
-public interface MessageMapper extends Mapper<Message> {
+public interface MessageMapper extends MyMapper<Message> {
 }

@@ -23,7 +23,7 @@ public class BaseResponseVO {
     private String message;
 
     @ApiModelProperty("响应时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date timestamp;
 
     public BaseResponseVO(ResponseStatusType status) {

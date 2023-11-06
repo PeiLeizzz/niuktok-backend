@@ -31,7 +31,8 @@ public enum ResponseStatusType implements BaseEnum<Integer> {
 
     // 视频模块
     DUPLICATED_VIDEO(20000, "video is already uploaded by this user"),
-    INVALID_VIDEO_KEY(20001, "invalid video key");
+    INVALID_VIDEO_KEY(20001, "invalid video key"),
+    NOT_EXISTED_PARTITION(20002, "partition not existed");
 
     @JsonValue
     private final Integer code;

@@ -8,7 +8,7 @@
         <property name="endingDelimiter" value="`"/>
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
+            <property name="mappers" value="com.niuktok.backend.common.mapper.base.MyMapper" />
             <property name="caseSensitive" value="true"/>
             <property name="lombok" value="Getter,Setter,ToString"/>
         </plugin>
@@ -51,6 +51,9 @@
         <table tableName = "video_tag" >
             <generatedKey column="id" sqlStatement="JDBC" />
         </table>
+        <table tableName = "video_tag_link" >
+            <generatedKey column="id" sqlStatement="JDBC" />
+        </table>
         <table tableName = "user_video_view" >
             <generatedKey column="id" sqlStatement="JDBC" />
         </table>
@@ -67,6 +70,9 @@
             <generatedKey column="id" sqlStatement="JDBC" />
         </table>
         <table tableName = "message" >
+            <generatedKey column="id" sqlStatement="JDBC" />
+        </table>
+        <table tableName = "partition" >
             <generatedKey column="id" sqlStatement="JDBC" />
         </table>
     </context>

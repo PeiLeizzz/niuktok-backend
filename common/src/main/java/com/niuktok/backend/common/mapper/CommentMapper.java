@@ -1,7 +1,7 @@
 package com.niuktok.backend.common.mapper;
 
 import com.niuktok.backend.common.entity.Comment;
-import tk.mybatis.mapper.common.Mapper;
+import com.niuktok.backend.common.mapper.base.MyMapper;
 
-public interface CommentMapper extends Mapper<Comment> {
+public interface CommentMapper extends MyMapper<Comment> {
 }

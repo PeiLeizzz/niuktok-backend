@@ -10,17 +10,17 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Table(name = "user_follow")
-public class UserFollow implements Serializable {
+@Table(name = "video_tag_link")
+public class VideoTagLink implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "tag_id")
+    private Long tagId;
 
-    @Column(name = "follower_id")
-    private Long followerId;
+    @Column(name = "video_id")
+    private Long videoId;
 
     @Column(name = "created_time")
     private Date createdTime;

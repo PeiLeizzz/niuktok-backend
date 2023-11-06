@@ -7,16 +7,20 @@
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="video_key" jdbcType="VARCHAR" property="videoKey" />
     <result column="video_path" jdbcType="VARCHAR" property="videoPath" />
     <result column="cover_path" jdbcType="VARCHAR" property="coverPath" />
     <result column="play_num" jdbcType="BIGINT" property="playNum" />
     <result column="like_num" jdbcType="BIGINT" property="likeNum" />
     <result column="favorite_num" jdbcType="BIGINT" property="favoriteNum" />
     <result column="share_num" jdbcType="BIGINT" property="shareNum" />
+    <result column="partition_id" jdbcType="BIGINT" property="partitionId" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
     <result column="deleted_time" jdbcType="TIMESTAMP" property="deletedTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
     <result column="info" jdbcType="LONGVARCHAR" property="info" />
   </resultMap>
 </mapper>

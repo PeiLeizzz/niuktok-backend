@@ -1,6 +1,7 @@
 package com.niuktok.backend.auth.service.impl;
 
 import com.niuktok.backend.auth.entity.AuthenticationUser;
+import com.niuktok.backend.common.def.LogicDeleteEnum;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.entity.User;
 import com.niuktok.backend.common.entity.UserAuth;
@@ -37,6 +38,7 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
         }
 
         String identifier = username.substring(barIndex + 1);
+        userAuth.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
         userAuth.setIdentityType(identityTypeCode);
         userAuth.setIdentifier(identifier);
         UserAuth userAuthInDB = userAuthMapper.selectOne(userAuth);

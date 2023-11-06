@@ -1,7 +1,7 @@
 package com.niuktok.backend.common.mapper;
 
 import com.niuktok.backend.common.entity.Video;
-import tk.mybatis.mapper.common.Mapper;
+import com.niuktok.backend.common.mapper.base.MyMapper;
 
-public interface VideoMapper extends Mapper<Video> {
+public interface VideoMapper extends MyMapper<Video> {
 }

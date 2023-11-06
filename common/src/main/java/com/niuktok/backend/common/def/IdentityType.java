@@ -21,10 +21,12 @@ public enum IdentityType implements BaseEnum<Byte> {
         this.description = msg;
     }
 
+    @Override
     public Byte getCode() {
         return code;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }

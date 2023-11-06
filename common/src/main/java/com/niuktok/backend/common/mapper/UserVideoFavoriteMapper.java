@@ -1,7 +1,7 @@
 package com.niuktok.backend.common.mapper;
 
 import com.niuktok.backend.common.entity.UserVideoFavorite;
-import tk.mybatis.mapper.common.Mapper;
+import com.niuktok.backend.common.mapper.base.MyMapper;
 
-public interface UserVideoFavoriteMapper extends Mapper<UserVideoFavorite> {
+public interface UserVideoFavoriteMapper extends MyMapper<UserVideoFavorite> {
 }

@@ -42,5 +42,8 @@ public class Comment implements Serializable {
     @Column(name = "deleted_time")
     private Date deletedTime;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     private static final long serialVersionUID = 1L;
 }
