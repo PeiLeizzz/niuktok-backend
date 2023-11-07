@@ -3,8 +3,10 @@ server:
 
 qiniu:
   access-key: bgQHEdgUnYo-bTIEP7OXwMxphw0p7pwtO6j9v2Yq
-  secret-key: J4rrGGQxEi1PaIklQ7INZyBGA3qiZQDKCvgQsbi8
+  secret-key: xxx
   bucket: niuktok
   expire-times: 3600
+  useHttps: false
+  domain: s3nj7lcag.bkt.clouddn.com
   put-policy:
     return-body: "{\"key\":\"$(key)\",\"hash\":\"$(etag)\"}"

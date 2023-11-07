@@ -1,3 +1,7 @@
+spring:
+  jackson:
+    time-zone: Asia/Shanghai
+
 mybatis:
   mapperLocations: classpath*:mapper/*.xml
   
@@ -49,3 +53,10 @@ customize:
         - /swagger-ui.html
         - /favicon.ico
         - /webjars/.*
+        - .*/ua/.*
+      internal-urls:
+        - .*/internal/.*
+    video:
+      service-name: video-service
+    interactive:
+      service-name: interactive-service
