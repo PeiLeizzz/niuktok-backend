@@ -42,6 +42,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String url = exchange.getRequest().getPath().toString();
+        for (String internalUrl : authConfigurer.getIgnoreUrls()) {
+            if (url.matches(internalUrl)) {
+                return responseErrorMessage(exchange, new BaseResponseVO(ResponseStatusType.NO_PERMISSIONS));
+            }
+        }
         for (String ignoreUrl : authConfigurer.getIgnoreUrls()) {
             if (url.matches(ignoreUrl)) {
                 return chain.filter(exchange);

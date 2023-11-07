@@ -13,6 +13,8 @@ import java.util.List;
 public class AuthConfigurer {
     private List<String> ignoreUrls;
 
+    private List<String> internalUrls;
+
     private String serviceName;
 
     @Value("${customize.service.auth.entry-point.url}")

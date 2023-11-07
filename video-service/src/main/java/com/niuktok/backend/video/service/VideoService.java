@@ -1,13 +1,11 @@
 package com.niuktok.backend.video.service;
 
-import java.util.List;
-
-import com.qiniu.storage.model.FileInfo;
+import com.niuktok.backend.common.def.VideoInteractiveType;
 
 public interface VideoService {
-    String getQiniuToken();
+    boolean exist(Long videoID);
+    
+    void syncInteraction(Long videoID, VideoInteractiveType interactiveType, Long num);
 
-    void uploadVideo(Long userID, FileInfo fileInfo, String videoKey, String title, String description, Long videoPartitionID, List<String> tags);
-
-    FileInfo getFileInfo(String videoKey);
+    String getPath(Long videoID);
 }

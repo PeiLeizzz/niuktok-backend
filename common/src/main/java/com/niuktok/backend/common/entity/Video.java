@@ -32,8 +32,8 @@ public class Video implements Serializable {
     @Column(name = "cover_path")
     private String coverPath;
 
-    @Column(name = "play_num")
-    private Long playNum;
+    @Column(name = "view_num")
+    private Long viewNum;
 
     @Column(name = "like_num")
     private Long likeNum;
