@@ -24,6 +24,21 @@ public class UserController {
         @NotNull(message = "userID 不能为空") 
         @Positive(message = "userID 不能为负数") 
         Long userID) {
-        return GenericResponseVO.ok(userService.getUserInfo(userID));
+        return GenericResponseVO.ok(userService.getUserInfo(userID, true));
+    }
+
+    @GetMapping(value = "/info/{userID}", produces = "application/json;charset=UTF-8")
+    @ApiOperation("获取用户基本信息")
+    public GenericResponseVO<UserInfoVO> getUserInfo(
+        @RequestHeader("userID")
+        @NotNull(message = "userID 不能为空") 
+        @Positive(message = "userID 不能为负数") 
+        Long userID,
+        @PathVariable("userID") 
+        @NotNull(message = "userID 不能为空") 
+        @Positive(message = "userID 不能为空")
+        Long otherUserID
+        ) {
+        return GenericResponseVO.ok(userService.getUserInfo(userID, userID == otherUserID));
     }
 }

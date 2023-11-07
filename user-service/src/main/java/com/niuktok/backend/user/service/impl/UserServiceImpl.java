@@ -28,23 +28,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserInfoVO getUserInfo(Long userID) {
+    public UserInfoVO getUserInfo(Long userID, Boolean isMe) {
         User user = userMapper.selectByPrimaryKey(userID);
         if (user == null) {
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_USER);
         }
-        UserAuth userAuth = new UserAuth();
-        userAuth.setUserId(userID);
-        userAuth.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
-        List<UserAuth> userAuths = userAuthMapper.select(userAuth);
 
-        UserInfoVO userInfoVO = new UserInfoVO();
-        userInfoVO.setUsername(user.getUsername());
-        userInfoVO.setUserAuthList(
-                userAuths.stream().map(
-                        ua -> new UserAuthVO(IdentityType.getByCode(ua.getIdentityType()), ua.getIdentifier())
-                ).collect(Collectors.toList())
-        );
+        UserInfoVO userInfoVO = new UserInfoVO(user);
+        if (isMe) {
+            UserAuth userAuth = new UserAuth();
+            userAuth.setUserId(userID);
+            userAuth.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
+            List<UserAuth> userAuths = userAuthMapper.select(userAuth);
+            userInfoVO.setUserAuthList(
+                    userAuths.stream().map(
+                            ua -> new UserAuthVO(IdentityType.getByCode(ua.getIdentityType()), ua.getIdentifier())
+                    ).collect(Collectors.toList())
+            );
+        }
         return userInfoVO;
     }
 }
