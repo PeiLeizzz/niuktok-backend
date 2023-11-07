@@ -12,6 +12,7 @@
         - `niuktok-datasource-${env}.yaml` 中的 MySQL 数据库地址、认证信息等需要根据实际情况修改
         - `redis-datasource-${env}.yaml` 中的 Redis 缓存地址、认证信息等需要根据实际情况修改
     - 每个微服务的 `bootstrap-${env}.yml` 中的 `spring.cloud.nacos` 地址、认证信息等需要根据实际情况修改
+    - 运行 SQL 建表脚本：`scripts/niuktok.sql`
 - 运行 Docker 化部署脚本
 
     ```sh
