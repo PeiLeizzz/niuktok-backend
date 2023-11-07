@@ -71,18 +71,19 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         try {
             SecurityContextHolder.getContext().setAuthentication(getAuthentication(token));
         } catch (NiuktokException e) {
-                BaseResponseVO responseVO = new BaseResponseVO(e.getResponseStatusType());
-                response.setCharacterEncoding("UTF-8");
-                response.setContentType("application/json");
-                ObjectMapper objectMapper = new ObjectMapper();
-                response.getWriter().write(objectMapper.writeValueAsString(responseVO));
-                return;
+            // BUG: 未登陆用户请求 /logout 时无法获得响应
+            BaseResponseVO responseVO = new BaseResponseVO(e.getResponseStatusType());
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            ObjectMapper objectMapper = new ObjectMapper();
+            response.getWriter().write(objectMapper.writeValueAsString(responseVO));
+            return;
         }
         super.doFilterInternal(request, response, chain);
         jwtTokenUtil.renewal(token);
     }
 
-    // 这里从 Token 中获取用户信息
+    // 这里从 Token 中获取用户信息并设置 Authentication 到 SecurityContext 中
     private UsernamePasswordAuthenticationToken getAuthentication(String token) throws NiuktokException {
         try {
             boolean expiration = jwtTokenUtil.isExpiration(token);
