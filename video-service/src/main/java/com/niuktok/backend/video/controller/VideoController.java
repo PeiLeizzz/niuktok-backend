@@ -22,6 +22,7 @@ import com.niuktok.backend.common.entity.Video;
 import com.niuktok.backend.common.pojo.dto.interactive.VideoInteractionSyncDTO;
 import com.niuktok.backend.common.pojo.vo.BaseResponseVO;
 import com.niuktok.backend.common.pojo.vo.GenericResponseVO;
+import com.niuktok.backend.video.pojo.vo.VideoDetailVO;
 import com.niuktok.backend.video.pojo.vo.VideoPullVO;
 import com.niuktok.backend.video.service.VideoService;
 
@@ -86,5 +87,21 @@ public class VideoController implements com.niuktok.backend.common.controller.vi
             return new VideoPullVO.VideoInfoVO(v);
         }).collect(Collectors.toList());
         return GenericResponseVO.ok(new VideoPullVO(videoList));
+    }
+
+    @GetMapping(value = "/ua/detail/{videoID}", produces = "application/json;charset=UTF-8")
+    @ApiOperation("获取视频详细信息")
+    public GenericResponseVO<VideoDetailVO> detail(
+        @ApiParam(value = "用户 ID", required = false)
+        @RequestHeader(value = "userID", required = false) 
+        @Positive(message = "用户 ID 不能为负数") 
+        Long userID,
+        @ApiParam(value = "视频 ID", required = true)
+        @PathVariable("videoID") 
+        @NotNull(message = "视频 ID 不能为空") 
+        @Positive(message = "视频 ID 不能为负数") 
+        Long videoID
+    ) {
+        return GenericResponseVO.ok(videoService.detail(userID, videoID));
     }
 }

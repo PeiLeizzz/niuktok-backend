@@ -11,9 +11,9 @@ import com.niuktok.backend.common.def.LogicDeleteEnum;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.entity.Video;
 import com.niuktok.backend.common.exception.NiuktokException;
-import com.niuktok.backend.common.mapper.VideoPartitionMapper;
 import com.niuktok.backend.common.mapper.VideoMapper;
 import com.niuktok.backend.video.config.QiniuConfigurer;
+import com.niuktok.backend.video.service.PartitionService;
 import com.niuktok.backend.video.service.TagService;
 import com.niuktok.backend.video.service.UploadService;
 import com.qiniu.common.QiniuException;
@@ -35,7 +35,7 @@ public class UploadServiceImpl implements UploadService {
     private TagService tagService;
 
     @Autowired
-    private VideoPartitionMapper partitionMapper;
+    private PartitionService partitionService;
 
     @Override
     public String getQiniuToken() {
@@ -61,8 +61,8 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     @Transactional
-    public void uploadVideo(Long userID, FileInfo fileInfo, String videoKey, String title, String description, Long videoPartitionID, List<String> tags) {
-        if (!partitionMapper.existsWithPrimaryKey(videoPartitionID)) {
+    public void uploadVideo(Long userID, FileInfo fileInfo, String videoKey, String title, String description, Long partitionID, List<String> tags) {
+        if (!partitionService.exist(partitionID)) {
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_PARTITION);
         }
 
@@ -77,7 +77,7 @@ public class UploadServiceImpl implements UploadService {
         video.setId(wfgIdGenerator.next());
         video.setTitle(title);
         video.setDescription(description);
-        video.setPartitionId(videoPartitionID);
+        video.setPartitionId(partitionID);
         // path 暂时也用 key
         video.setVideoPath(videoKey);
         video.setInfo(Json.encode(fileInfo));

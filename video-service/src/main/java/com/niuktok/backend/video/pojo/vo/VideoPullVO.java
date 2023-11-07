@@ -45,6 +45,9 @@ public class VideoPullVO {
         @ApiModelProperty("视频描述")
         private String description;
 
+        @ApiModelProperty("分区 ID")
+        private Long partitionID;
+
         @ApiModelProperty("视频播放量")
         private Long viewNum;
 
@@ -78,6 +81,7 @@ public class VideoPullVO {
             this.coverPath = video.getCoverPath();
             this.title = video.getTitle();
             this.description = video.getDescription();
+            this.partitionID = video.getPartitionId();
             this.viewNum = video.getViewNum();
             this.likeNum = video.getLikeNum();
             this.favoriteNum = video.getFavoriteNum();

@@ -7,7 +7,7 @@ import com.qiniu.storage.model.FileInfo;
 public interface UploadService {
     String getQiniuToken();
 
-    void uploadVideo(Long userID, FileInfo fileInfo, String videoKey, String title, String description, Long videoPartitionID, List<String> tags);
+    void uploadVideo(Long userID, FileInfo fileInfo, String videoKey, String title, String description, Long partitionID, List<String> tags);
 
     FileInfo getFileInfo(String videoKey);
 }
