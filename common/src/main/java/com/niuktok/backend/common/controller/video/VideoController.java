@@ -16,17 +16,17 @@ import com.niuktok.backend.common.pojo.vo.GenericResponseVO;
 
 @Validated
 public interface VideoController {
-    @GetMapping(value = "/ua/exist/{videoID}", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/internal/exist/{videoID}", produces = "application/json;charset=UTF-8")
     GenericResponseVO<Boolean> exist(@PathVariable("videoID") 
         @NotNull(message = "视频 ID 不能为空") @Positive(message = "视频 ID 不能为负数") Long videoID);
 
-    @PostMapping(value = "/sync/interaction/{videoID}", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/internal/sync/interaction/{videoID}", produces = "application/json;charset=UTF-8")
     BaseResponseVO syncInteraction(
         @PathVariable("videoID") 
         @NotNull(message = "视频 ID 不能为空") @Positive(message = "视频 ID 不能为负数") Long videoID,
         @RequestBody @Valid VideoInteractionSyncDTO interactionSyncDTO);
 
-    @GetMapping(value = "/ua/path/{videoID}", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/internal/path/{videoID}", produces = "application/json;charset=UTF-8")
     GenericResponseVO<String> getPath(@PathVariable("videoID") 
         @NotNull(message = "视频 ID 不能为空") @Positive(message = "视频 ID 不能为负数") Long videoID);
 }

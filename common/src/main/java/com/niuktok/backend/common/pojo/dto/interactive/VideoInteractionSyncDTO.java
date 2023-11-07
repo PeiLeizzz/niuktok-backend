@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@ApiModel(description = "Redis set 请求体")
+@ApiModel(description = "视频交互数据同步请求体")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
