@@ -35,7 +35,7 @@ public class VideoController implements com.niuktok.backend.common.controller.vi
     private VideoService videoService;
 
     @Override
-    @GetMapping(value = "/ua/exist/{videoID}", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/internal/exist/{videoID}", produces = "application/json;charset=UTF-8")
     @ApiOperation("查询视频是否存在")
     public GenericResponseVO<Boolean> exist(@PathVariable("videoID") 
         @NotNull(message = "视频 ID 不能为空") @Positive(message = "视频 ID 不能为负数") Long videoID) {
@@ -55,7 +55,7 @@ public class VideoController implements com.niuktok.backend.common.controller.vi
     }
 
     @Override
-    @GetMapping(value = "/ua/path/{videoID}", produces = "application/json;charset=UTF-8")
+    @GetMapping(value = "/internal/path/{videoID}", produces = "application/json;charset=UTF-8")
     @ApiOperation("获取视频路径")
     public GenericResponseVO<String> getPath(@PathVariable("videoID") 
         @NotNull(message = "视频 ID 不能为空") @Positive(message = "视频 ID 不能为负数") Long videoID) {

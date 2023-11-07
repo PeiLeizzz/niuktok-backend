@@ -55,7 +55,6 @@ public class InteractiveServiceImpl implements InteractiveService {
             view.setLastProgress(progress);
             viewMapper.insertSelective(view);
         } else {
-            viewInDB.setCount(viewInDB.getCount() + 1);
             viewInDB.setLastProgress(progress);
             viewMapper.updateByPrimaryKeySelective(viewInDB);
         }

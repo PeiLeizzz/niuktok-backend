@@ -49,7 +49,7 @@ public class VideoServiceImpl implements VideoService {
         if (video == null) {
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_VIDEO);
         }
-        return video.getVideoPath();
+        return concatPrivatePath(video.getVideoPath());
     }
 
     private Video getVideo(Long videoID) {

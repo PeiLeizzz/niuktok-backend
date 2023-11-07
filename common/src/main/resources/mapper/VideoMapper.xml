@@ -26,7 +26,7 @@
 
   <update id="updateInteractiveNum">
     UPDATE `video`
-    SET `${columnName}` = `${columnName}` + #{num}
+    SET `${interactiveName}_num` = `${interactiveName}_num` + #{num}
     WHERE `id` = #{videoID}
     AND `is_deleted` = ${@com.niuktok.backend.common.def.LogicDeleteEnum@NOT_DELETED.value}
   </update>
@@ -65,5 +65,21 @@
       ORDER BY RAND() 
       LIMIT #{size}
     ) as `v3` ON `v1`.`id` = `v3`.`id`
+  </select>
+
+  <select id="selectRelateVideos" resultMap="BaseResultMap">
+    SELECT v.* from `video` AS `v`
+    JOIN `user_video_${interactiveName}` AS `t`
+    ON `v`.`id` = `t`.`video_id`
+    AND `t`.`user_id` = #{userID}
+    WHERE `v`.`is_deleted` = ${@com.niuktok.backend.common.def.LogicDeleteEnum@NOT_DELETED.value}
+    AND `t`.`is_deleted` = ${@com.niuktok.backend.common.def.LogicDeleteEnum@NOT_DELETED.value}
+    ORDER BY `t`.`updated_time` ${orderDir}
+  </select>
+
+  <select id="selectVideosOfUser" resultMap="BaseResultMap">
+    SELECT v.* from `video` AS `v`
+    WHERE `v`.`is_deleted` = ${@com.niuktok.backend.common.def.LogicDeleteEnum@NOT_DELETED.value}
+    ORDER BY `v`.`updated_time` ${orderDir}
   </select>
 </mapper>

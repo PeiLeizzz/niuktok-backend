@@ -12,10 +12,10 @@ import com.niuktok.backend.common.annotation.SwaggerDisplayEnum;
  */
 @SwaggerDisplayEnum(index = "code", name = "description")
 public enum VideoInteractiveType implements BaseEnum<Byte> {
-    LIKE((byte) 0, "like_num"),
-    SHARE((byte) 1, "share_num"),
-    FAVORITE((byte) 2, "favorite_num"),
-    VIEW((byte) 3, "view_num");
+    LIKE((byte) 0, "like"),
+    SHARE((byte) 1, "share"),
+    FAVORITE((byte) 2, "favorite"),
+    VIEW((byte) 3, "view");
 
     @JsonValue
     private final Byte code;
