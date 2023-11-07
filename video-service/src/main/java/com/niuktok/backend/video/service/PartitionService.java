@@ -9,5 +9,7 @@ import com.niuktok.backend.common.entity.VideoPartition;
 public interface PartitionService {
     List<VideoPartition> getAllPartitions();
 
+    Boolean exist(Long partitionID);
+
     PageInfo<Video> getPartitionVideos(Long partitionID, Integer pageNo, Integer pageSize, String orderDir);
 }

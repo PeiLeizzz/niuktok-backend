@@ -66,7 +66,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void resetCredential(Long userID, String identifier, String credential, Byte identityType) {
-        if (!userMapper.existsWithPrimaryKey(userID)) {
+        User user = new User();
+        user.setId(userID);
+        user.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
+        if (userMapper.selectCount(user) == 0) {
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_USER);
         }
 

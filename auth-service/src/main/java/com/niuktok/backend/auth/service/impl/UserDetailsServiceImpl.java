@@ -46,7 +46,10 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_USER);
         }
 
-        User user = userMapper.selectByPrimaryKey(userAuthInDB.getUserId());
+        User user = new User();
+        user.setId(userAuthInDB.getUserId());
+        user.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
+        user = userMapper.selectOne(user);
         if (user == null) {
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_USER);
         }

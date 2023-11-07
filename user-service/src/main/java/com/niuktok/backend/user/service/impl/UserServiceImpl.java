@@ -29,7 +29,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserInfoVO getUserInfo(Long userID, Boolean isMe) {
-        User user = userMapper.selectByPrimaryKey(userID);
+        User user = new User();
+        user.setId(userID);
+        user.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
+        user = userMapper.selectOne(user);
         if (user == null) {
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_USER);
         }

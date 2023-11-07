@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.niuktok.backend.common.def.LogicDeleteEnum;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.entity.Video;
 import com.niuktok.backend.common.entity.VideoPartition;
@@ -30,10 +31,17 @@ public class PartitionServiceImpl implements PartitionService {
 		return partitionMapper.selectAll();
 	}
 
+    public Boolean exist(Long partitionID) {
+        VideoPartition partition = new VideoPartition();
+        partition.setId(partitionID);
+        partition.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
+        return partitionMapper.selectCount(partition) == 1;
+    }
+
 	@Override
     @Transactional
 	public PageInfo<Video> getPartitionVideos(Long partitionID, Integer pageNo, Integer pageSize, String orderDir) {
-        if (!partitionMapper.existsWithPrimaryKey(partitionID)) {
+        if (!exist(partitionID)) {
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_PARTITION);
         }
         Page<Video> page = PageHelper.startPage(pageNo, pageSize);
