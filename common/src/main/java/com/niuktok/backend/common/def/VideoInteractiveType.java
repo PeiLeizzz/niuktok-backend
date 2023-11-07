@@ -1,5 +1,9 @@
 package com.niuktok.backend.common.def;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.niuktok.backend.common.annotation.SwaggerDisplayEnum;
 
@@ -30,5 +34,18 @@ public enum VideoInteractiveType implements BaseEnum<Byte> {
     @Override
     public String getDescription() {
         return description;
+    }
+
+    @JsonIgnore
+    private static final Map<Byte, VideoInteractiveType> interactiveTypeMap = new HashMap<>();
+
+    static {
+        for (VideoInteractiveType interactiveType : VideoInteractiveType.values()) {
+            interactiveTypeMap.put(interactiveType.getCode(), interactiveType);
+        }
+    }
+
+    public static VideoInteractiveType getByCode(Byte code) {
+        return interactiveTypeMap.get(code);
     }
 }

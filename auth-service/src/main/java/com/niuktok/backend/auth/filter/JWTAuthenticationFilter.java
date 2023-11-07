@@ -5,7 +5,6 @@ import com.niuktok.backend.auth.entity.AuthenticationUser;
 import com.niuktok.backend.auth.exception.NiuktokAuthenticationException;
 import com.niuktok.backend.auth.pojo.dto.UserLoginDTO;
 import com.niuktok.backend.auth.utils.JwtTokenUtil;
-import com.niuktok.backend.common.def.IdentityType;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.exception.NiuktokException;
 import com.niuktok.backend.common.pojo.vo.BaseResponseVO;
@@ -24,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -51,10 +49,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             loginUser = new ObjectMapper().readValue(request.getInputStream(), UserLoginDTO.class);
         } catch (Exception e) {
-            if (e.getMessage() != null && e.getMessage().contains("not one of the values accepted for Enum class")) {
-                throw new NiuktokAuthenticationException(ResponseStatusType.INVALID_PARAMS, 
-                    "invalid identityType, not one of the values accepted for " + Arrays.toString(IdentityType.values()));
-            }
             throw new NiuktokAuthenticationException(ResponseStatusType.INVALID_PARAMS);
         }
         
@@ -65,7 +59,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         rememberMe.set(loginUser.getRememberMe() != null && loginUser.getRememberMe());
         return authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginUser.getIdentityType().getCode() + ":" + loginUser.getIdentifier(), loginUser.getCredential(), new ArrayList<>())
+                new UsernamePasswordAuthenticationToken(loginUser.getIdentityType() + ":" + loginUser.getIdentifier(), loginUser.getCredential(), new ArrayList<>())
         );
     }
 

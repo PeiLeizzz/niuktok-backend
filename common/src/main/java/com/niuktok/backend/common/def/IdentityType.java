@@ -1,5 +1,9 @@
 package com.niuktok.backend.common.def;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.niuktok.backend.common.annotation.SwaggerDisplayEnum;
 
@@ -31,12 +35,16 @@ public enum IdentityType implements BaseEnum<Byte> {
         return description;
     }
 
-    public static IdentityType getByCode(Byte code) {
+    @JsonIgnore
+    private static final Map<Byte, IdentityType> indentityTypeMap = new HashMap<>();
+
+    static {
         for (IdentityType identityType : IdentityType.values()) {
-            if (identityType.getCode().equals(code)) {
-                return identityType;
-            }
+            indentityTypeMap.put(identityType.getCode(), identityType);
         }
-        return null;
+    }
+
+    public static IdentityType getByCode(Byte code) {
+        return indentityTypeMap.get(code);
     }
 }

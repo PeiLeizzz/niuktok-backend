@@ -4,7 +4,6 @@ import com.hy.corecode.idgen.WFGIdGenerator;
 import com.niuktok.backend.auth.service.AuthService;
 import com.niuktok.backend.auth.service.feign.RedisFeign;
 import com.niuktok.backend.auth.utils.JwtTokenUtil;
-import com.niuktok.backend.common.def.IdentityType;
 import com.niuktok.backend.common.def.LogicDeleteEnum;
 import com.niuktok.backend.common.def.ResponseStatusType;
 import com.niuktok.backend.common.entity.User;
@@ -50,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
         UserAuth userAuth = new UserAuth();
         userAuth.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
         userAuth.setIdentifier(userRegisterDTO.getIdentifier());
-        userAuth.setIdentityType(userRegisterDTO.getIdentityType().getCode());
+        userAuth.setIdentityType(userRegisterDTO.getIdentityType());
         if (userAuthMapper.selectCount(userAuth) > 0) {
             throw new NiuktokException(ResponseStatusType.EXISTED_IDENTIFIER);
         }
@@ -66,7 +65,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void resetCredential(Long userID, String identifier, String credential, IdentityType identityType) {
+    public void resetCredential(Long userID, String identifier, String credential, Byte identityType) {
         if (!userMapper.existsWithPrimaryKey(userID)) {
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_USER);
         }
@@ -75,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
         userAuth.setIsDeleted(LogicDeleteEnum.NOT_DELETED.value());
         userAuth.setUserId(userID);
         userAuth.setIdentifier(identifier);
-        userAuth.setIdentityType(identityType.getCode());
+        userAuth.setIdentityType(identityType);
         UserAuth userAuthInDB = userAuthMapper.selectOne(userAuth);
         if (userAuthInDB == null) {
             throw new NiuktokException(ResponseStatusType.NOT_EXISTED_IDENTIFIER);

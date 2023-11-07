@@ -15,22 +15,22 @@ public class DirectInteractionSync implements InteractionSync {
 
     @Override
     public void syncViewNum(Long videoID, Long num) {
-        videoFeign.syncInteraction(videoID, new VideoInteractionSyncDTO(VideoInteractiveType.VIEW, num));
+        videoFeign.syncInteraction(videoID, new VideoInteractionSyncDTO(VideoInteractiveType.VIEW.getCode(), num));
     }
 
     @Override
     public void syncLikeNum(Long videoID, Long num) {
-        videoFeign.syncInteraction(videoID, new VideoInteractionSyncDTO(VideoInteractiveType.LIKE, num));
+        videoFeign.syncInteraction(videoID, new VideoInteractionSyncDTO(VideoInteractiveType.LIKE.getCode(), num));
     }
 
     @Override
     public void syncFavoriteNum(Long videoID, Long num) {
-        videoFeign.syncInteraction(videoID, new VideoInteractionSyncDTO(VideoInteractiveType.FAVORITE, num));
+        videoFeign.syncInteraction(videoID, new VideoInteractionSyncDTO(VideoInteractiveType.FAVORITE.getCode(), num));
     }
 
     @Override
     public void syncShareNum(Long videoID, Long num) {
-        videoFeign.syncInteraction(videoID, new VideoInteractionSyncDTO(VideoInteractiveType.SHARE, num));
+        videoFeign.syncInteraction(videoID, new VideoInteractionSyncDTO(VideoInteractiveType.SHARE.getCode(), num));
     }
     
 }

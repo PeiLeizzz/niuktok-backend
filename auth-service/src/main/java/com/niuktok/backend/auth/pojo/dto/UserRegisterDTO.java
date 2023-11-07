@@ -1,5 +1,6 @@
 package com.niuktok.backend.auth.pojo.dto;
 
+import com.niuktok.backend.common.annotation.EnumCheck;
 import com.niuktok.backend.common.def.IdentityType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,5 +32,6 @@ public class UserRegisterDTO {
 
     @ApiModelProperty(value = "登陆标识类型", dataType = "int", required = true)
     @NotNull(message = "登陆标识类型不能为空")
-    private IdentityType identityType;
+    @EnumCheck(clazz = IdentityType.class, message = "登陆标识类型不合法")
+    private Byte identityType;
 }

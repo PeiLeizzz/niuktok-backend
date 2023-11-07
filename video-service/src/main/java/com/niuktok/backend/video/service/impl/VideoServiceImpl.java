@@ -25,8 +25,8 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void syncInteraction(Long videoID, VideoInteractiveType interactiveType, Long num) {
-        videoMapper.updateInteractiveNum(videoID, interactiveType.getDescription(), num);
+    public void syncInteraction(Long videoID, Byte interactiveType, Long num) {
+        videoMapper.updateInteractiveNum(videoID, VideoInteractiveType.getByCode(interactiveType).getDescription(), num);
     }
 
     @Override
