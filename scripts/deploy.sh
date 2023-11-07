@@ -1,4 +1,5 @@
-CI_BUILD_REF_NAME=$1
+CI_BUILD_REF_NAME=dev
+MAVEN_SETTING_PATH=~/maven/repository/settings.xml
 echo "deploying on" $CI_BUILD_REF_NAME
 
 # 打包主工程
@@ -7,7 +8,7 @@ mvn clean
 if [[ $? -ne '0' ]]; then echo 'build failed'; exit 1; fi;
 
 # maven jre >= 11
-mvn package -B -Dmaven.test.skip=true -s ~/maven/repository/settings.xml
+mvn package -B -Dmaven.test.skip=true -s $MAVEN_SETTING_PATH
 if [[ $? -ne '0' ]]; then echo 'build failed'; exit 1; fi;
 
 if [[ $CI_BUILD_REF_NAME =~ dev ]]; then env=dev;
