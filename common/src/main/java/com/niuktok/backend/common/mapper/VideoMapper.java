@@ -17,4 +17,6 @@ public interface VideoMapper extends MyMapper<Video> {
     List<Video> selectRelateVideos(@Param("userID") Long userID, @Param("interactiveName") String interactiveName, @Param("orderDir") String orderDir);
 
     List<Video> selectVideosOfUser(@Param("userID") Long userID, @Param("orderDir") String orderDir);
+
+    List<Video> selectPartitionVideos(@Param("partitionID") Long partitionID, @Param("orderDir") String orderDir);
 }

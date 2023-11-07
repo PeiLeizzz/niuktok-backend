@@ -80,6 +80,14 @@
   <select id="selectVideosOfUser" resultMap="BaseResultMap">
     SELECT v.* from `video` AS `v`
     WHERE `v`.`is_deleted` = ${@com.niuktok.backend.common.def.LogicDeleteEnum@NOT_DELETED.value}
+    AND `v`.`user_id` = #{userID}
+    ORDER BY `v`.`updated_time` ${orderDir}
+  </select>
+
+  <select id="selectPartitionVideos" resultMap="BaseResultMap">
+    SELECT v.* from `video` AS `v`
+    WHERE `v`.`is_deleted` = ${@com.niuktok.backend.common.def.LogicDeleteEnum@NOT_DELETED.value}
+    AND `v`.`partition_id` = #{partitionID}
     ORDER BY `v`.`updated_time` ${orderDir}
   </select>
 </mapper>
