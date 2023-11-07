@@ -41,15 +41,17 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
+        boolean needIgnored = false;
         for (String ignoreUrl : ignoreUrls) {
             if (request.getServletPath().matches(ignoreUrl)) {
-                chain.doFilter(request, response);
-                return;
+                needIgnored = true;
+                break;
             }
         }
         String tokenHeader = request.getHeader(JwtTokenUtil.TOKEN_HEADER);
+        boolean tokenHeaderValid = tokenHeader != null && tokenHeader.startsWith(JwtTokenUtil.TOKEN_PREFIX);
         // 如果请求头中没有 Authorization 信息则直接拦截
-        if (tokenHeader == null || !tokenHeader.startsWith(JwtTokenUtil.TOKEN_PREFIX)) {
+        if (!needIgnored && !tokenHeaderValid) {
             BaseResponseVO responseVO = new BaseResponseVO(ResponseStatusType.UNAUTHORIZED);
 
             response.setCharacterEncoding("UTF-8");
@@ -59,19 +61,22 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             response.getWriter().write(objectMapper.writeValueAsString(responseVO));
             return;
         }
+        if (!tokenHeaderValid) {
+            chain.doFilter(request, response);
+            return;
+        }
         // 如果请求头中有 Token，则进行解析，并且设置认证信息
+        // ignoreUrl 也需要设置，防止盗用它人 Token
         String token = tokenHeader.replace(JwtTokenUtil.TOKEN_PREFIX, "");
         try {
             SecurityContextHolder.getContext().setAuthentication(getAuthentication(token));
         } catch (NiuktokException e) {
-            BaseResponseVO responseVO = new BaseResponseVO(e.getResponseStatusType());
-
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/json");
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            response.getWriter().write(objectMapper.writeValueAsString(responseVO));
-            return;
+                BaseResponseVO responseVO = new BaseResponseVO(e.getResponseStatusType());
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("application/json");
+                ObjectMapper objectMapper = new ObjectMapper();
+                response.getWriter().write(objectMapper.writeValueAsString(responseVO));
+                return;
         }
         super.doFilterInternal(request, response, chain);
         jwtTokenUtil.renewal(token);
