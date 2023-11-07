@@ -30,4 +30,40 @@
     WHERE `id` = #{videoID}
     AND `is_deleted` = ${@com.niuktok.backend.common.def.LogicDeleteEnum@NOT_DELETED.value}
   </update>
+
+  <select id="selectRandom" resultMap="BaseResultMap">
+    SELECT * FROM `video` AS `v1`
+    JOIN (
+      SELECT `id` FROM `video` 
+      WHERE `is_deleted` = ${@com.niuktok.backend.common.def.LogicDeleteEnum@NOT_DELETED.value}
+        <if test="filterVideos != null and filterVideos.size() > 0">
+          AND `id` NOT IN 
+          <foreach item="video" index="index" collection="filterVideos" open="(" close=")" separator=",">
+              #{video.id}
+          </foreach>
+        </if>
+      ORDER BY RAND() 
+      LIMIT #{size}
+    ) as `v2` ON `v1`.`id` = `v2`.`id`
+  </select>
+
+  <select id="selectUserRecentRandom" resultMap="BaseResultMap">
+    SELECT * FROM `video` AS `v1`
+    JOIN (
+      SELECT `id` FROM (
+        SELECT `in_v`.`id` FROM `video` as `in_v`
+        LEFT JOIN `user_video_view` as `in_uvv`
+        ON `in_v`.`id` = `in_uvv`.`video_id`
+        AND `in_uvv`.`is_deleted` = ${@com.niuktok.backend.common.def.LogicDeleteEnum@NOT_DELETED.value}
+        
+        WHERE `in_v`.`user_id` != #{userID}
+        AND (`in_uvv`.`user_id` IS NULL OR `in_uvv`.`user_id` != #{userID})
+        AND `in_v`.`is_deleted` = 0
+        ORDER BY `in_v`.`updated_time` DESC
+        LIMIT #{range}
+      ) as `v2`
+      ORDER BY RAND() 
+      LIMIT #{size}
+    ) as `v3` ON `v1`.`id` = `v3`.`id`
+  </select>
 </mapper>

@@ -42,14 +42,16 @@ public class AuthFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String url = exchange.getRequest().getPath().toString();
-        for (String internalUrl : authConfigurer.getIgnoreUrls()) {
+        for (String internalUrl : authConfigurer.getInternalUrls()) {
             if (url.matches(internalUrl)) {
                 return responseErrorMessage(exchange, new BaseResponseVO(ResponseStatusType.NO_PERMISSIONS));
             }
         }
+        boolean needIgnored = false;
         for (String ignoreUrl : authConfigurer.getIgnoreUrls()) {
             if (url.matches(ignoreUrl)) {
-                return chain.filter(exchange);
+                needIgnored = true;
+                break;
             }
         }
 
@@ -63,10 +65,14 @@ public class AuthFilter implements GlobalFilter, Ordered {
             ResponseEntity response = future.get();
             Map<String, Object> body = (Map<String, Object>) response.getBody();
             Integer code = (Integer) body.get("status");
-            if (!ResponseStatusType.SUCCESS.getCode().equals(code)) {
+            if (!needIgnored && !ResponseStatusType.SUCCESS.getCode().equals(code)) {
                 return responseErrorMessage(exchange, new BaseResponseVO(ResponseStatusType.getByCode(code)));
             }
-            String userID = (String) body.get("data");
+            Object userIDObj = body.get("data");
+            if (needIgnored && userIDObj == null) {
+                return chain.filter(exchange);
+            }
+            String userID = (String) userIDObj;
             ServerHttpRequest.Builder requestBuilder = exchange.getRequest().mutate();
             requestBuilder.headers(k -> k.set("userID", userID));
             ServerHttpRequest request = requestBuilder.build();

@@ -33,6 +33,7 @@
         <mybatis-starter.version>2.2.2</mybatis-starter.version>
         <mapper-starter.version>2.1.5</mapper-starter.version>
         <mybatis-plus.version>3.5.4</mybatis-plus.version>
+        <pagehelper.version>1.4.1</pagehelper.version>
         <swagger.version>2.9.2</swagger.version>
         <redission.version>3.17.1</redission.version>
         <hutool.version>4.5.15</hutool.version>
@@ -120,6 +121,12 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <!--数据库查询物理分页-->
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
