@@ -1,0 +1,31 @@
+stages:
+  - maven
+  - build
+  - deploy
+  
+maven_job:
+  stage: maven
+  tags:
+    - default
+  only:
+    - master
+  script:
+    - echo "This is the first maven job"
+    
+build_job:
+  stage: build
+  tags:
+    - default
+  only:
+    - master
+  script:
+    -  echo "This is the first build job"
+
+deploy_job:
+  stage: deploy
+  tags:
+    - default
+  only:
+    - master
+  script:
+    - echo "This is the first deploy job"
