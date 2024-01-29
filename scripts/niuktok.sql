@@ -4,7 +4,7 @@
  Source Server         : 218-niuktok
  Source Server Type    : MySQL
  Source Server Version : 80027
- Source Host           : 10.214.199.218:3398
+ Source Host           : 101.37.82.108:3398
  Source Schema         : niuktok
 
  Target Server Type    : MySQL

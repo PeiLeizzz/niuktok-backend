@@ -15,7 +15,7 @@
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://10.214.199.218:3398/niuktok?serverTimezone=Asia/Shanghai&amp;useSSL=false&amp;useUnicode=true&amp;amp&amp;characterEncoding=utf-8"
+                        connectionURL="jdbc:mysql://101.37.82.108:3398/niuktok?serverTimezone=Asia/Shanghai&amp;useSSL=false&amp;useUnicode=true&amp;amp&amp;characterEncoding=utf-8"
                         userId="qiniu"
                         password="qiniu1024">
             <!--If you are using version 8.x of Connector/J you may notice that the generator attempts to-->

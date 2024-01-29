@@ -7,7 +7,7 @@ spring:
       username: nacos
       password: nacos
       # Nacos 服务发现与注册配置，server-addr 指定 Nacos 服务器主机和端口
-      server-addr: 10.214.199.218:18848
+      server-addr: 101.37.82.108:18848
       discovery:
         namespace: niuktok-${env}
         group: ${env}

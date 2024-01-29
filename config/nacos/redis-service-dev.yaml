@@ -1,6 +1,6 @@
 spring:
   redis:
-    host: 10.214.199.218
+    host: 101.37.82.108
     port: 6338
     password: qiniu1024
     lettuce:
@@ -12,7 +12,7 @@ spring:
     redisson:
       config: |
         singleServerConfig:
-          address: redis://10.214.199.218:6338
+          address: redis://101.37.82.108:6338
           connectionMinimumIdleSize: 11
           password: qiniu1024
           database: 0
